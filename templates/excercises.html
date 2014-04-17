@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block inner_content %}
+
+    {% if user.excercises %}
+    <section class="stats">
+
+        <section class="balance {% if user.balance > 0 %}positive{% else %}negative{% endif %}">
+            <label>Balance</label>
+            <p>{{ user.balance }} <span>pts</span></p>
+        </section>
+
+        <section class="streak">
+            <label>Current Streak</label>
+            <p>{{ user.streak }} <span>days</span></p>
+        </section>
+
+    </section>
+    {% endif %}
+
+    <section class="excercise-list">
+        <h3>Excercises</h3>
+        <ul>
+            {% for excercise in user.excercises %}
+            <li>
+                <div class="excercise-name">{{ excercise.name }}</div>
+                <!-- <form method="post" action="/user/{{user._id}}/excercise/{{excercise.eid}}/delete"><input type="submit" value="delete"/></form> -->
+                <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{excercise.value}}">
+                    <button class="deposit">Deposit</button>
+                </form>
+                <div class="excercise-value">{{ excercise.value }}</div>
+            </li>
+            {% endfor %}
+        </ul>
+        <footer class="open">
+            <button class="add-btn">Add Excercise</button>
+            <form id="add-form" method="post">
+
+                <div>
+                    <input name="name" type="text" placeholder="25 Pull-ups" />
+                </div>
+
+                <div>
+                    <input name="value" type="number" placeholder="value" />
+                </div>
+
+                <button>Add</button>
+            </form>
+        </footer>
+    </section>
+
+
+
+    <script>
+
+        function addDate(e) {
+            var today = new Date();
+            var dateInput = document.createElement('input');
+            dateInput.setAttribute('type', 'hidden');
+            dateInput.setAttribute('name', 'date');
+            dateInput.setAttribute('value', [
+                today.getFullYear(), 
+                today.getMonth(), 
+                today.getDate()
+            ].join('/'));
+            e.target.appendChild(dateInput);
+        }
+
+        var depositForms = document.querySelectorAll('.deposit-form');
+
+        for (var i = 0; i < depositForms.length; i++) {
+            var form = depositForms[i];
+            form.addEventListener('submit', addDate);
+        }
+
+        var addBtn = document.querySelectorAll('.add-btn')[0];
+        var footer = document.querySelectorAll('.excercise-list footer')[0];
+        addBtn.addEventListener('click', function(e) {
+            footer.classList.add('open');
+        });
+
+    </script>
+{% endblock %}

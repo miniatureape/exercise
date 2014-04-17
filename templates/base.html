@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Excercredit</title>
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        {% block css %}
+        <link href="/static/styles/base.css" rel="stylesheet"></link>
+        {% endblock %}
+    </head>
+    <body>
+
+        {% block outer_content %}
+            <section id="content">
+            {% block inner_content %}
+            {% endblock %}
+            </section>
+        {% endblock %}
+
+        {% block base_scripts %}
+        <script src="/static/scripts/base.js"></script>
+        {% endblock %}
+
+        {% block page_scripts %}{% endblock %}
+    </body>
+</html>

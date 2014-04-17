@@ -1,0 +1,205 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Helvetica, Arial, sans-serif;
+    background: #ecf0f1;
+}
+
+#content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.title {
+    font-size: 36px;
+    margin-top: 20px;
+}
+
+.sub-title {
+    font-size: 24px;
+    margin-top: 0;
+}
+
+.sign-up {
+    border-radius: 3px;
+    border: solid 1px #eee;
+    padding: 20px;
+    text-align: center;
+}
+
+.sign-up input, .sign-up button {
+    font-size: 18px;
+    line-height: 24px;
+    padding: 12px;
+}
+
+.sign-up button {
+    color: #ecf0f1;
+    background: #3498db;
+}
+
+.stats {
+    overflow: auto;
+}
+
+button {
+    border-radius: 3px;
+    font-weight: bold;
+    border: none;
+    padding: 14px 7px;
+}
+
+.stats section {
+    border-radius: 5px;
+    padding: 14px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 18px;
+    width: 48%;
+    float: left;
+    background: #ecf0f1;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.stats p {
+    font-size: 48px;
+    margin: 0;
+}
+
+.stats label {
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+    display: block;
+}
+
+.stats span {
+    font-size: 24px;
+}
+
+.stats .streak {
+    float: right;
+}
+
+.stats .balance {
+    float: left;
+}
+
+.stats .balance.positive {
+}
+
+.stats .balance.negative {
+}
+
+.excercise-list {
+    border-radius: 5px;
+    background-color: #34495e; 
+    color: #ecf0f1;
+    overflow: hidden;
+}
+
+.excercise-list h3 {
+    font-size: 28px;
+    padding: 14px;
+    border-radius: 5px;
+    background-color: #2c3e50; 
+    margin: 0;
+}
+
+.excercise-list ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    width: 100%;
+}
+
+.excercise-list li {
+    overflow: auto;
+    padding: 14px;
+    text-transform: capitalize;
+    border-bottom: 1px solid #2c3e50;
+}
+
+.deposit-form {
+    display: block;
+    background: green;
+    float: right;
+}
+
+.excercise-list .deposit {
+    color: #ecf0f1;
+    background: #27ae60;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 7px;
+}
+
+.excercise-list .excercise-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.excercise-list .excercise-value {
+    float: right;
+}
+
+.excercise-list footer {
+    background-color: #2c3e50; 
+    padding: 14px;
+    position: relative;
+    height: 82px;
+}
+
+.excercise-list .add-btn {
+    color: #ecf0f1;
+    background: #3498db;
+    font-size: 18px;
+    position: relative;
+    opacity: 1;
+    -webkit-transition: left .2s, opacity .2s;
+}
+
+.excercise-list #add-form {
+    position: absolute;
+    left: -100%;
+    top: 14px;
+    opacity: 0;
+    -webkit-transition: left .2s .2s, opacity .2s .2s;
+}
+
+.excercise-list #add-form label {
+    display: block;
+    font-weight: bold;
+}
+
+.excercise-list #add-form div {
+    display: block;
+    float: left;
+    margin-right: 14px;
+}
+
+#add-form input {
+    font-size: 18px;
+    padding: 7px;
+}
+
+#add-form button {
+
+}
+
+#add-form input[name="value"] {
+    width: 40%;
+}
+
+.excercise-list footer.open #add-form {
+    left: 14px;
+    opacity: 1;
+}
+
+.excercise-list footer.open .add-btn {
+    opacity: 0;
+}
