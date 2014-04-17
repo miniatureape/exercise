@@ -23,25 +23,31 @@
         <ul>
             {% for excercise in user.excercises %}
             <li>
+
                 <div class="excercise-name">{{ excercise.name }}</div>
-                <!-- <form method="post" action="/user/{{user._id}}/excercise/{{excercise.eid}}/delete"><input type="submit" value="delete"/></form> -->
-                <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{excercise.value}}">
-                    <button class="deposit">Deposit</button>
+
+                <form class="delete-excercise-form" method="post" action="/user/{{user._id}}/excercise/{{excercise.eid}}/delete">
+                    <button>del</button>
                 </form>
-                <div class="excercise-value">{{ excercise.value }}</div>
+
+                <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{excercise.value}}">
+                    <button class="deposit">{{ excercise.value }}</button>
+                </form>
+
+                <div class="excercise-value"></div>
             </li>
             {% endfor %}
         </ul>
-        <footer class="open">
+        <footer {% if not user.excercises %} class="open" {% endif %}>
             <button class="add-btn">Add Excercise</button>
             <form id="add-form" method="post">
 
                 <div>
-                    <input name="name" type="text" placeholder="25 Pull-ups" />
+                    <input name="name" type="text" placeholder="e.g. 25 Pull-ups" />
                 </div>
 
                 <div>
-                    <input name="value" type="number" placeholder="value" />
+                    <input name="value" type="number" placeholder="e.g 20" />
                 </div>
 
                 <button>Add</button>
