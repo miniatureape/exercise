@@ -1,0 +1,7 @@
+Hello {{ user.email }}
+
+Your balance is {{ user.balance }}.
+
+Your current streak has been {{ user.longest_streak }}
+
+Your longest streak has been {{ user.streak }}
