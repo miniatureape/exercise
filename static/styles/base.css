@@ -88,6 +88,10 @@ button {
     float: left;
 }
 
+.stats section.wide {
+    width: 100%;
+}
+
 .stats .balance.positive {
 }
 

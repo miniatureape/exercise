@@ -38,7 +38,9 @@ def create_doc(email, id=None):
         "excercises": [],
         "created": int(time.time()),
         "streak": 0,
-        "last": None
+        "longest_streak": 0,
+        "last": None,
+        "last_mail": None
     }
 
     return user_doc
@@ -105,6 +107,9 @@ def deposit(user, value, date):
     user['streak'] = calc_streak(user, date)
     user['balance'] = user.get('balance') + value
     user['last'] = date
+
+    if user['streak'] > user['longest_streak']:
+        user['longest_streak'] = user['streak']
 
     return store(user)
 

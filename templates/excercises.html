@@ -15,6 +15,11 @@
             <p>{{ user.streak }} <span>days</span></p>
         </section>
 
+        <section class="longest_streak wide">
+            <label>Longest Streak</label>
+            <p>{{ user.longest_streak }} <span>days</span></p>
+        </section>
+
     </section>
     {% endif %}
 
@@ -43,10 +48,12 @@
             <form id="add-form" method="post">
 
                 <div>
+                    <label>Description</label>
                     <input name="name" type="text" placeholder="e.g. 25 Pull-ups" />
                 </div>
 
                 <div>
+                    <label>Points</label>
                     <input name="value" type="number" placeholder="e.g 20" />
                 </div>
 
