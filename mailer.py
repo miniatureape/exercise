@@ -1,3 +1,4 @@
+import os
 import sys
 import smtplib  
 from pymongo import MongoClient
@@ -13,7 +14,7 @@ client = MongoClient('localhost', 27017)
 db = client.goal
 now = date.today()
 
-APP_PASS = None
+APP_PASS = os.environ.get('GOOGLE_APP_PASS', None);
 GMAIL_USERNAME = 'justin.donato@gmail.com'
 SUBJECT = 'Daily Balance'
 
@@ -30,7 +31,6 @@ def send_msg(user):
     msg = msg.as_string()
     print "Sending to %s, %s" % (msg, user.get('email'))
     session.sendmail(GMAIL_USERNAME, user.get('email'), msg)
-    # session.sendmail(GMAIL_USERNAME, 'justindonato@gmail.com', msg)
     session.quit()
 
 def make_msg(user):
