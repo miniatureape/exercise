@@ -42,7 +42,7 @@ def make_msg(user):
     return msg
 
 def create_email_text(user):
-    print template.render(user=user)
+    return template.render(user=user)
 
 def mail(user):
     send_msg(user)
