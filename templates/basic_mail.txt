@@ -7,3 +7,5 @@ Your current streak has been {{ user.longest_streak }}
 Your longest streak has been {{ user.streak }}
 
 <a href="http://107.170.94.82/user/{{ user._id }}/excercises">Go log some exercises!</a>
+
+<a href="http://107.170.94.82/user/{{ user._id }}/delete">Sick of this? Delete your account</a>
