@@ -117,3 +117,6 @@ def store(user):
     db.users.save(user)
     return user
 
+def delete(user):
+    return db.users.remove({'_id': user.get('_id')})
+

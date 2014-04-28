@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block inner_content %}
+
+Really Delete?
+
+<form method="post">
+    <input type="hidden" value="1" name="confirmed" />
+    <button>Yes!</button>
+</form>
+<button>Nope</button>
+{% endblock %}

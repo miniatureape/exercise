@@ -32,10 +32,24 @@ def del_excercise(user_id, eid):
 
     return redirect('/user/%s/excercises' % user_id)
 
+@app.route("/user/<user_id>/delete", methods=['GET', 'POST'])
+def del_user(user_id):
+
+    if request.method == 'POST' and request.form.get('confirmed', '1'):
+        user = Users.find_by_id(user_id)
+        if user:
+            Users.delete(user)
+        return redirect('/')
+
+    return render_template('delete.html')
+
 @app.route("/user/<user_id>/excercises", methods=['GET', 'POST'])
 def excercises(user_id):
 
     user = Users.find_by_id(user_id)
+
+    if not user:
+        return redirect('/')
 
     if request.method == 'POST':
         eid = request.form.get('eid', None)
