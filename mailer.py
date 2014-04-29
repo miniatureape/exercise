@@ -3,6 +3,7 @@ import sys
 import smtplib  
 from pymongo import MongoClient
 from datetime import date
+from datetime import datetime
 from email.mime.text import MIMEText
 from jinja2 import Environment, FileSystemLoader
 
@@ -29,8 +30,11 @@ def send_msg(user):
 
     msg = make_msg(user)
     msg = msg.as_string()
-    print "Sending to %s, %s" % (msg, user.get('email'))
+
+    print "Message for %s: %s" % (user.get('email'), msg.replace('\n', ''))
+
     session.sendmail(GMAIL_USERNAME, user.get('email'), msg)
+
     session.quit()
 
 def make_msg(user):
@@ -45,20 +49,25 @@ def create_email_text(user):
     return template.render(user=user)
 
 def mail(user):
+    print "Sending mail to: %s" % user.get('email')
     send_msg(user)
-    "TODO: update date"
+    user['last_mail'] = datetime.combine(now, datetime.min.time())
+    db.users.save(user)
 
 if __name__ == '__main__':
 
-    if not APP_PASS:
-        print "Need app pass!"
-        sys.exit()
+    print "Started mail script at: %s" % datetime.now().strftime("%c")
+
+    assert APP_PASS != None, "Need to set app pass first. Exiting"
 
     for user in users:
+        print "Checking: %s" % user.get('email')
         last_mail = user.get('last_mail')
         if not last_mail:
             mail(user)
         else:
-            delta = now - last_mail
+            delta = now - last_mail.date()
             if delta.days > 0:
                 mail(user)
+            else:
+                print "Skipping: %s. Already sent today." % user.get('email')
