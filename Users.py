@@ -40,7 +40,8 @@ def create_doc(email, id=None):
         "streak": 0,
         "longest_streak": 0,
         "last": None,
-        "last_mail": None
+        "last_mail": None,
+        "last_deducted": None
     }
 
     return user_doc
