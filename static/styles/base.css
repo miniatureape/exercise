@@ -200,7 +200,6 @@ button {
 /* Temp */
 .delete-excercise-form button {
     float: left;
-    line-height: 2.2rem;
     background: none;
     padding: .2rem .3rem;
     color: #ecf0f1;
@@ -269,5 +268,9 @@ button {
         margin: 0;
     }
 
+
+    .delete-excercise-form button {
+        line-height: 2.2rem;
+    }
 }
 
