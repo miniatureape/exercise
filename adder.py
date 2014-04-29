@@ -1,10 +1,13 @@
 from pymongo import MongoClient
+from datetime import date
+from datetime import datetime
 
 client = MongoClient('localhost', 27017)
+db = client.goal
 now = date.today()
 users = db.users.find()
 
-def deduct():
+def deduct(user):
     print "Deducting 100 points from: %s" % user.get('email')
 
     user['balance'] = user.get('balance') - 100
