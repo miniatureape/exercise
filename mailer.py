@@ -8,7 +8,8 @@ from email.mime.text import MIMEText
 from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('templates'))
-template = env.get_template('basic_mail.txt')
+template = env.get_template(os.path.join(os.path.dirname(__file__), 'basic_mail.txt'))
+
 
 client = MongoClient('localhost', 27017)
 
