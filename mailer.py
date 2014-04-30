@@ -7,8 +7,9 @@ from datetime import datetime
 from email.mime.text import MIMEText
 from jinja2 import Environment, FileSystemLoader
 
-env = Environment(loader=FileSystemLoader('templates'))
-template = env.get_template(os.path.join(os.path.dirname(__file__), 'basic_mail.txt'))
+file_dir = os.path.dirname(__file__)
+env = Environment(loader=FileSystemLoader(os.path.join(file_dir, 'templates')))
+template = env.get_template(os.path.join(file_dir, 'basic_mail.txt'))
 
 
 client = MongoClient('localhost', 27017)
