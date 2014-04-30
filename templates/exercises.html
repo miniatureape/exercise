@@ -2,7 +2,7 @@
 
 {% block inner_content %}
 
-    {% if user.excercises %}
+    {% if user.exercises %}
     <section class="stats">
 
         <section class="balance {% if user.balance > 0 %}positive{% else %}negative{% endif %}">
@@ -23,28 +23,28 @@
     </section>
     {% endif %}
 
-    <section class="excercise-list">
-        <h3>Excercises</h3>
+    <section class="exercise-list">
+        <h3>Exercises</h3>
         <ul>
-            {% for excercise in user.excercises %}
+            {% for exercise in user.exercises %}
             <li>
 
-                <div class="excercise-name">{{ excercise.name }}</div>
+                <div class="exercise-name">{{ exercise.name }}</div>
 
-                <form class="delete-excercise-form" method="post" action="/user/{{user._id}}/excercise/{{excercise.eid}}/delete">
+                <form class="delete-exercise-form" method="post" action="/user/{{user._id}}/exercise/{{exercise.eid}}/delete">
                     <button><i class="icon-pencil"></i></button>
                 </form>
 
-                <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{excercise.value}}">
-                    <button class="deposit">{{ excercise.value }}<i class="icon-ok"></i></button>
+                <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
+                    <button class="deposit">{{ exercise.value }}<i class="icon-ok"></i></button>
                 </form>
 
-                <div class="excercise-value"></div>
+                <div class="exercise-value"></div>
             </li>
             {% endfor %}
         </ul>
-        <footer {% if not user.excercises %} class="open" {% endif %}>
-            <button class="add-btn">Add Excercise</button>
+        <footer {% if not user.exercises %} class="open" {% endif %}>
+            <button class="add-btn">Add Exercise</button>
             <form id="add-form" method="post">
 
                 <div>
@@ -87,7 +87,7 @@
         }
 
         var addBtn = document.querySelectorAll('.add-btn')[0];
-        var footer = document.querySelectorAll('.excercise-list footer')[0];
+        var footer = document.querySelectorAll('.exercise-list footer')[0];
         addBtn.addEventListener('click', function(e) {
             footer.classList.add('open');
         });
@@ -99,7 +99,7 @@
             }
         }
 
-        var deleteExerciseForms = document.querySelectorAll('.delete-excercise-form');
+        var deleteExerciseForms = document.querySelectorAll('.delete-exercise-form');
 
         for (var i = 0; i < deleteExerciseForms.length; i++) {
             deleteExerciseForms[i].addEventListener('submit', confirmOnDelete);

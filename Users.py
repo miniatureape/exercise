@@ -5,7 +5,7 @@ from flask.ext import pymongo
 
 """
 
-excercises: [{
+exercises: [{
     "eid": 123,
     "name": "abc",
     "value": "abc",
@@ -35,7 +35,7 @@ def create_doc(email, id=None):
         "bill": 0,
         "balance": -100,
         "email": email,
-        "excercises": [],
+        "exercises": [],
         "created": int(time.time()),
         "streak": 0,
         "longest_streak": 0,
@@ -58,29 +58,29 @@ def find_one(query):
 def find_by_id(user_id):
     return db.users.find_one({'_id': pymongo.ObjectId(user_id)})
 
-def update_excercise(user, data, eid):
-    for e in user.get(excercises, []):
+def update_exercise(user, data, eid):
+    for e in user.get(exercises, []):
         if e.get('eid') == eid:
             e.update(data)
     return user
 
-def add_excercise(user, data):
+def add_exercise(user, data):
     data.update({"eid": generate_id()})
-    user.get('excercises').append(data)
+    user.get('exercises').append(data)
     return user
 
-def set_excercise(user, data, eid=None):
+def set_exercise(user, data, eid=None):
 
     if eid:
-        user = update_excercise(user, data, eid)
+        user = update_exercise(user, data, eid)
     else:
-        user = add_excercise(user, data);
+        user = add_exercise(user, data);
 
     return store(user)
 
-def del_excercise(user, eid):
-    excercises = [e for e in user.get('excercises', []) if e.get('eid') != eid]
-    user['excercises'] = excercises
+def del_exercise(user, eid):
+    exercises = [e for e in user.get('exercises', []) if e.get('eid') != eid]
+    user['exercises'] = exercises
     return store(user)
 
 def date_str_to_list(datestr):

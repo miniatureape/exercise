@@ -20,17 +20,17 @@ def deposit(user_id, amount):
     if user:
         Users.deposit(user, amount, request.form.get('date'))
 
-    return redirect('/user/%s/excercises' % user_id)
+    return redirect('/user/%s/exercises' % user_id)
 
-@app.route("/user/<user_id>/excercise/<eid>/delete", methods=['POST'])
-def del_excercise(user_id, eid):
+@app.route("/user/<user_id>/exercise/<eid>/delete", methods=['POST'])
+def del_exercise(user_id, eid):
 
     user = Users.find_by_id(user_id)
 
     if user:
-        Users.del_excercise(user, eid)
+        Users.del_exercise(user, eid)
 
-    return redirect('/user/%s/excercises' % user_id)
+    return redirect('/user/%s/exercises' % user_id)
 
 @app.route("/user/<user_id>/delete", methods=['GET', 'POST'])
 def del_user(user_id):
@@ -43,8 +43,8 @@ def del_user(user_id):
 
     return render_template('delete.html')
 
-@app.route("/user/<user_id>/excercises", methods=['GET', 'POST'])
-def excercises(user_id):
+@app.route("/user/<user_id>/exercises", methods=['GET', 'POST'])
+def exercises(user_id):
 
     user = Users.find_by_id(user_id)
 
@@ -59,9 +59,9 @@ def excercises(user_id):
             "value": int(request.form.get('value', 0)),
         }
 
-        user = Users.set_excercise(user, data, eid)
+        user = Users.set_exercise(user, data, eid)
 
-    return render_template('excercises.html', user=user)
+    return render_template('exercises.html', user=user)
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
@@ -72,7 +72,7 @@ def index():
         if not user:
             print "creating new user"
             user_id = Users.create(email)
-            return redirect('/user/%s/excercises?add=1' % user_id)
+            return redirect('/user/%s/exercises?add=1' % user_id)
         else:
             "email already registered"
             pass

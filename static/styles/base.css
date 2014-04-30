@@ -97,14 +97,14 @@ button {
 .stats .balance.negative {
 }
 
-.excercise-list {
+.exercise-list {
     border-radius: 5px;
     background-color: #34495e; 
     color: #ecf0f1;
     overflow: hidden;
 }
 
-.excercise-list h3 {
+.exercise-list h3 {
     font-size: 1.5rem;
     padding: 1rem;
     border-radius: 5px;
@@ -112,14 +112,14 @@ button {
     margin: 0;
 }
 
-.excercise-list ul {
+.exercise-list ul {
     margin: 0;
     padding: 0;
     list-style-type: none;
     width: 100%;
 }
 
-.excercise-list li {
+.exercise-list li {
     overflow: auto;
     padding: .8rem;
     text-transform: capitalize;
@@ -131,7 +131,7 @@ button {
     float: right;
 }
 
-.excercise-list .deposit {
+.exercise-list .deposit {
     color: #ecf0f1;
     background: #27ae60;
     font-weight: bold;
@@ -140,22 +140,22 @@ button {
     padding: 7px;
 }
 
-.excercise-list .excercise-name {
+.exercise-list .exercise-name {
     font-size: 1.5rem;
     font-weight: bold;
     float: left;
 }
 
-.excercise-list .excercise-value {
+.exercise-list .exercise-value {
     float: right;
 }
 
-.excercise-list footer {
+.exercise-list footer {
     background-color: #2c3e50; 
     padding: 14px;
 }
 
-.excercise-list .add-btn {
+.exercise-list .add-btn {
     color: #ecf0f1;
     background: #3498db;
     display: block;
@@ -189,16 +189,16 @@ button {
     width: 40%;
 }
 
-.excercise-list footer.open #add-form {
+.exercise-list footer.open #add-form {
     display: block;
 }
 
-.excercise-list footer.open .add-btn {
+.exercise-list footer.open .add-btn {
     display: none;
 }
 
 /* Temp */
-.delete-excercise-form button {
+.delete-exercise-form button {
     float: left;
     background: none;
     padding: .2rem .3rem;
@@ -229,23 +229,23 @@ button {
         font-size: .8rem;
     }
 
-    .excercise-list h3 {
+    .exercise-list h3 {
         font-size: 1rem;
         padding: .8rem;
     }
 
-    .excercise-list .excercise-name {
+    .exercise-list .exercise-name {
         font-size: 1rem;
         line-height: 3rem;
     }
 
-    .excercise-list li {
+    .exercise-list li {
         height: 3rem;
         padding: 0px 2rem;
         overflow: hidden;
     }
 
-    .excercise-list .deposit {
+    .exercise-list .deposit {
         font-weight: bold;
         border: none;
         border-radius: 5px;
@@ -269,7 +269,7 @@ button {
     }
 
 
-    .delete-excercise-form button {
+    .delete-exercise-form button {
         line-height: 2.2rem;
     }
 }
