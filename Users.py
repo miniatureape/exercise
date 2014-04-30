@@ -33,7 +33,7 @@ def create_doc(email, id=None):
 
     user_doc = {
         "bill": 0,
-        "balance": -100,
+        "balance": 0,
         "email": email,
         "exercises": [],
         "created": int(time.time()),
