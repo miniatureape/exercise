@@ -8,9 +8,9 @@ from email.mime.text import MIMEText
 from jinja2 import Environment, FileSystemLoader
 
 file_dir = os.path.dirname(__file__)
+print file_dir
 env = Environment(loader=FileSystemLoader(os.path.join(file_dir, 'templates')))
-template = env.get_template(os.path.join(file_dir, 'basic_mail.txt'))
-
+template = env.get_template('basic_mail.txt')
 
 client = MongoClient('localhost', 27017)
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     print "Started mail script at: %s" % datetime.now().strftime("%c")
 
-    assert APP_PASS != None, "Need to set app pass first. Exiting"
+    assert APP_PASS != None, "Need to set $GOOGLE_APP_PASS first. Exiting"
 
     for user in users:
         print "Checking: %s" % user.get('email')
