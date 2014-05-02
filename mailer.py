@@ -35,7 +35,7 @@ def send_msg(user):
 
     email_address = user.get('email')
 
-    print "Message for %s: %s" % email_address, msg.replace('\n', ''))
+    print "Message for %s: %s" % (email_address, msg.replace('\n', ''))
 
     try:
         session.sendmail(GMAIL_USERNAME, email_address, msg)
