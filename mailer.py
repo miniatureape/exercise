@@ -33,9 +33,14 @@ def send_msg(user):
     msg = make_msg(user)
     msg = msg.as_string()
 
-    print "Message for %s: %s" % (user.get('email'), msg.replace('\n', ''))
+    email_address = user.get('email')
 
-    session.sendmail(GMAIL_USERNAME, user.get('email'), msg)
+    print "Message for %s: %s" % email_address, msg.replace('\n', ''))
+
+    try:
+        session.sendmail(GMAIL_USERNAME, email_address, msg)
+    except smtplib.SMTPRecipientsRefused:
+        print "Could not send message to %s" % email_address
 
     session.quit()
 
