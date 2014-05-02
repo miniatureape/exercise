@@ -10,7 +10,16 @@ users = db.users.find()
 def deduct(user):
     print "Deducting 100 points from: %s" % user.get('email')
 
-    user['balance'] = user.get('balance') - 100
+    prev_balance = user.get('balance')
+
+    if prev_balance >= 0:
+        user['streak'] = user['streak'] + 1
+
+        if user['streak'] > user['longest_streak']:
+            user['longest_streak'] = user['streak']
+
+
+    user['balance'] = user['balance'] - 100
     user['last_deducted'] = datetime.combine(now, datetime.min.time())
 
     db.users.save(user)

@@ -86,31 +86,9 @@ def del_exercise(user, eid):
 def date_str_to_list(datestr):
     return [int(d) for d in datestr.split('/')]
 
-def calc_streak(user, date):
-
-    streak = 1
-    lastdate = user.get('last')
-
-    if lastdate is None:
-        return streak
-
-    curdate = datetime.date(*date_str_to_list(date))
-    lastdate = datetime.date(*date_str_to_list(date))
-
-    delta = curdate - lastdate
-
-    if delta.days == 1:
-        streak = user.get('streak') + 1
-
-    return streak
-
 def deposit(user, value, date):
-    user['streak'] = calc_streak(user, date)
     user['balance'] = user.get('balance') + value
     user['last'] = date
-
-    if user['streak'] > user['longest_streak']:
-        user['longest_streak'] = user['streak']
 
     return store(user)
 
