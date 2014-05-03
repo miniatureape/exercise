@@ -87,13 +87,16 @@
             DepositForm.prototype = { 
 
                 initEvents: function() { 
-                    this.form.on('submit', _.throttle($.proxy(this.onSubmit, this), 300, true)); 
+                    this.form.on('submit', $.proxy(this.onSubmit, this)); 
                 }, 
 
                 onSubmit: function(e) { 
                     e.preventDefault(); 
-
                     this.displayWait(); 
+                    this.postRequest();
+                }, 
+
+                postRequest: _.throttle(function() {
                     var req = $.ajax({ 
                         type: 'post', 
                         dataType: 'json', 
@@ -102,7 +105,7 @@
                     }); 
                     req.done($.proxy(this.onDone, this)); 
                     req.fail($.proxy(this.onFail, this)); 
-                }, 
+                }, 300),
 
                 displayWait: function() { 
                      this.button.addClass('waiting'); 
