@@ -2,7 +2,10 @@ from flask import Flask
 from flask import request
 from flask import redirect
 from flask import render_template
+from flask import jsonify
 from flask.ext import pymongo
+from bson import json_util
+import json
 import Users
 
 app = Flask('goal')
@@ -12,6 +15,11 @@ mongo = pymongo.PyMongo(app)
 Users.setApp(app)
 Users.setDb(mongo)
 
+def jsonifym(d):
+    "jsonifier that works with mongo objects"
+    return json.dumps(d, default=json_util.default)
+
+
 @app.route("/user/<user_id>/deposit/<int:amount>", methods=['POST'])
 def deposit(user_id, amount):
 
@@ -19,6 +27,9 @@ def deposit(user_id, amount):
 
     if user:
         Users.deposit(user, amount, request.form.get('date'))
+
+    if request.is_xhr:
+       return jsonifym(user)
 
     return redirect('/user/%s/exercises' % user_id)
 
