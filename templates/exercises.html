@@ -87,7 +87,7 @@
             DepositForm.prototype = { 
 
                 initEvents: function() { 
-                    this.form.on('submit', _.debounce($.proxy(this.onSubmit, this), 300, true)); 
+                    this.form.on('submit', _.throttle($.proxy(this.onSubmit, this), 300, true)); 
                 }, 
 
                 onSubmit: function(e) { 
