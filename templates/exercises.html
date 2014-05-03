@@ -7,103 +7,115 @@
 
         <section class="balance {% if user.balance > 0 %}positive{% else %}negative{% endif %}">
             <label>Balance</label>
-            <p>{{ user.balance }} <span>pts</span></p>
+            <p><span class="balance-amount">{{ user.balance }}</span> <span class="small">pts</span></p>
         </section>
 
         <section class="streak">
             <label>Current Streak</label>
-            <p>{{ user.streak }} <span>days</span></p>
+            <p>{{ user.streak }} <span class="small">days</span></p>
         </section>
 
         <section class="longest_streak wide">
             <label>Longest Streak</label>
-            <p>{{ user.longest_streak }} <span>days</span></p>
+            <p>{{ user.longest_streak }} <span class="small">days</span></p>
         </section>
 
     </section>
     {% endif %}
 
-    <section class="exercise-list">
-        <h3>Exercises</h3>
-        <ul>
-            {% for exercise in user.exercises %}
-            <li>
-
-                <div class="exercise-name">{{ exercise.name }}</div>
-
-                <form class="delete-exercise-form" method="post" action="/user/{{user._id}}/exercise/{{exercise.eid}}/delete">
-                    <button><i class="icon-pencil"></i></button>
-                </form>
-
-                <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
-                    <button class="deposit">{{ exercise.value }}<i class="icon-ok"></i></button>
-                </form>
-
-                <div class="exercise-value"></div>
-            </li>
-            {% endfor %}
-        </ul>
-        <footer {% if not user.exercises %} class="open" {% endif %}>
-            <button class="add-btn">Add Exercise</button>
-            <form id="add-form" method="post">
-
-                <div>
-                    <label>Description</label>
-                    <input name="name" type="text" placeholder="e.g. 25 Pull-ups" />
+    <section class="table-container" >
+        <section class="table exercise-table">
+            <header>
+                <div class="cell description">description</div>
+                <div class="cell value">log</div>
+            </header>
+            <section class="table-body">
+                {% for exercise in user.exercises %}
+                <div class="cell description">
+                    {{ exercise.name }}
+                    <form class="delete-exercise-form" method="post" action="/user/{{user._id}}/exercise/{{exercise.eid}}/delete">
+                        <button class="link"><i class="icon-pencil"></i></button>
+                    </form>
                 </div>
-
-                <div>
-                    <label>Points</label>
-                    <input name="value" type="number" placeholder="e.g 20" />
+                <div class="cell value">
+                    <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
+                        <button class="deposit ready">
+                            {{ exercise.value }}
+                            <i class="ready icon-ok"></i>
+                            <i class="waiting icon-spinner2 animate-spin"></i>
+                        </button>
+                    </form>
                 </div>
-
-                <button>Add</button>
-            </form>
-        </footer>
+                {% endfor %}
+            </section>
+            <footer {% if not user.exercises %} class="open" {% endif %}>
+                <div class="add-btn-row">
+                    <div class="cell">&nbsp;</div>
+                    <div class="cell">
+                        <button class="primary-btn add-btn">New Exercise</button>
+                    </div>
+                </div>
+                <form id="add-form" method="post">
+                    <div class="cell">
+                        <label>Description</label>
+                        <input name="name" type="text" placeholder="e.g. 25 Pull-ups" />
+                    </div>
+                    <div class="cell">
+                        <label>Value</label>
+                        <div>
+                            <input name="value" type="number" placeholder="e.g 20" />
+                            <button class="primary-btn">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </footer>
+        </section>
     </section>
+{% endblock %}
 
-
+{% block page_scripts %}
 
     <script>
 
-        function addDate(e) {
-            var today = new Date();
-            var dateInput = document.createElement('input');
-            dateInput.setAttribute('type', 'hidden');
-            dateInput.setAttribute('name', 'date');
-            dateInput.setAttribute('value', [
-                today.getFullYear(), 
-                today.getMonth(), 
-                today.getDate()
-            ].join('/'));
-            e.target.appendChild(dateInput);
-        }
+        (function() {
+            function DepositForm(form, bus) { this.form = $(form); this.button = this.form.find('button'); this.bus = $(bus); this.initEvents(); } DepositForm.prototype = { initEvents: function() { this.form.on('submit', $.proxy(this.onSubmit, this)); }, onSubmit: function(e) { e.preventDefault(); this.displayWait(); var req = $.ajax({ type: 'post', dataType: 'json', url: this.form.attr('action'), data: this.form.serialize() }); req.done($.proxy(this.onDone, this)); req.fail($.proxy(this.onFail, this)); }, displayWait: function() { this.button.addClass('waiting'); }, displayReady: function() { this.button.removeClass('waiting'); }, onDone: function(result) { var newBalance = result.balance;
+                    // TODO make this a  little more robust
+                    this.bus.trigger('new-balance', newBalance);
+                    this.displayReady();
+                },
 
-        var depositForms = document.querySelectorAll('.deposit-form');
+                onFail: function(e) {
+                    this.displayReady();
+                },
 
-        for (var i = 0; i < depositForms.length; i++) {
-            var form = depositForms[i];
-            form.addEventListener('submit', addDate);
-        }
-
-        var addBtn = document.querySelectorAll('.add-btn')[0];
-        var footer = document.querySelectorAll('.exercise-list footer')[0];
-        addBtn.addEventListener('click', function(e) {
-            footer.classList.add('open');
-        });
-
-        function confirmOnDelete (e) {
-            var result = confirm('In the future, this will allow editing, but now, clicking ok will delete.');
-            if (!result) {
-                e.preventDefault();
             }
-        }
 
-        var deleteExerciseForms = document.querySelectorAll('.delete-exercise-form');
+            
+            $('.deposit-form').each(function(index, elem) {
+                new DepositForm(elem, document.body);
+            });
 
-        for (var i = 0; i < deleteExerciseForms.length; i++) {
-            deleteExerciseForms[i].addEventListener('submit', confirmOnDelete);
-        }
+            $(document.body).on('new-balance', function(e, balance) {
+                $('.balance-amount').html(balance);
+            });
+
+            var addBtn = $('.add-btn');
+            var footer = $('.exercise-table footer');
+            addBtn.on('click', function(e) {
+                footer.addClass('open');
+            });
+
+            function confirmOnDelete (e) {
+                var result = confirm('In the future, this will allow editing, but now, clicking ok will delete.');
+                if (!result) {
+                    e.preventDefault();
+                }
+            }
+
+            var deleteExerciseForms = $('.delete-exercise-form');
+            deleteExerciseForms.on('submit', confirmOnDelete)
+        
+        })()
 
     </script>
 {% endblock %}
