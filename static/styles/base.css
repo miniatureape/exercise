@@ -126,6 +126,14 @@ button {
         padding: 0 12px;
     }
 
+    .table .cell.description {
+        width: 70%;
+    }
+
+    .table .cell.value {
+        width: 30%;
+    }
+
     .table header {
         font-weight: bold;
         font-size: .8rem;
