@@ -78,7 +78,42 @@
     <script>
 
         (function() {
-            function DepositForm(form, bus) { this.form = $(form); this.button = this.form.find('button'); this.bus = $(bus); this.initEvents(); } DepositForm.prototype = { initEvents: function() { this.form.on('submit', $.proxy(this.onSubmit, this)); }, onSubmit: function(e) { e.preventDefault(); this.displayWait(); var req = $.ajax({ type: 'post', dataType: 'json', url: this.form.attr('action'), data: this.form.serialize() }); req.done($.proxy(this.onDone, this)); req.fail($.proxy(this.onFail, this)); }, displayWait: function() { this.button.addClass('waiting'); }, displayReady: function() { this.button.removeClass('waiting'); }, onDone: function(result) { var newBalance = result.balance;
+            function DepositForm(form, bus) { 
+                this.form = $(form); 
+                this.button = this.form.find('button'); 
+                this.bus = $(bus); this.initEvents(); 
+            } 
+
+            DepositForm.prototype = { 
+
+                initEvents: function() { 
+                    this.form.on('submit', _.debounce($.proxy(this.onSubmit, this), 300, true)); 
+                }, 
+
+                onSubmit: function(e) { 
+                    e.preventDefault(); 
+
+                    this.displayWait(); 
+                    var req = $.ajax({ 
+                        type: 'post', 
+                        dataType: 'json', 
+                        url: this.form.attr('action'), 
+                        data: this.form.serialize() 
+                    }); 
+                    req.done($.proxy(this.onDone, this)); 
+                    req.fail($.proxy(this.onFail, this)); 
+                }, 
+
+                displayWait: function() { 
+                     this.button.addClass('waiting'); 
+                }, 
+
+                displayReady: function() { 
+                     this.button.removeClass('waiting'); 
+                }, 
+
+                onDone: function(result) {
+                    var newBalance = result.balance;
                     // TODO make this a  little more robust
                     this.bus.trigger('new-balance', newBalance);
                     this.displayReady();
@@ -86,7 +121,7 @@
 
                 onFail: function(e) {
                     this.displayReady();
-                },
+                }
 
             }
             
