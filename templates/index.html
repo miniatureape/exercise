@@ -1,14 +1,66 @@
 {% extends "base.html" %}
 
 {% block inner_content %}
-<h1 class="title">Excercredit</h1>
+<h1 class="title">Exercise Points</h1>
 <h2 class="sub-title">A simple way to start excercising and building healthy habits</h2>
-<p>Create a workout of favorite exercises and assign them a value.</p>
-<p>Everyday you owe 100 points. We send you an email with your balance.</p>
-<p>Complete exercises to earn points against your balance.</p>
 
-<form class="sign-up" action="" method="POST">
-    <input name="email" value="" type="email" placeholder="fdracula@example.com" />
-    <button>Sign Up</button>
-</form>
+<div id="intro">
+
+    <h3>How it Works</h3>
+    <p>Create a workout of favorite exercises and assign them a value.</p>
+
+    <div class="example well">
+        <section class="card table-container">
+            <section class="table exercise-table">
+                <section class="table-body">
+                    <div class="cell description">
+                        20 Push Ups
+                        <form class="delete-exercise-form">
+                            <button class="link"><i class="icon-pencil"></i></button>
+                        </form>
+                    </div>
+                    <div class="cell value">
+                        <form class="deposit-form" method="post">
+                            <button class="deposit ready">
+                                20
+                                <i class="ready icon-ok"></i>
+                                <i class="waiting icon-spinner2 animate-spin"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="cell description">
+                        50 Sit Ups
+                        <form class="delete-exercise-form">
+                            <button class="link"><i class="icon-pencil"></i></button>
+                        </form>
+                    </div>
+                    <div class="cell value">
+                        <form class="deposit-form" method="post">
+                            <button class="deposit ready">
+                                15
+                                <i class="ready icon-ok"></i>
+                                <i class="waiting icon-spinner2 animate-spin"></i>
+                            </button>
+                        </form>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </div>
+    <p>You start with a balance of 0 points. Every night, we deduct 100.</p>
+    <p>Do one of your exercises and log it to earn points against your balance.</p>
+    <p>If you keep a positive balance, you're on a streak. Fall below 0 and you break it.</p>
+    <p>Every night we'll send you an email to remind you.</p>
+
+</div>
+
+<div class="sign-up-section">
+    <h3>No password. No account. Sign up with your email.</h3>
+    <form class="sign-up well" action="" method="POST">
+        <input name="email" value="" type="email" placeholder="fdracula@example.com" />
+        <button>Sign Up</button>
+    </form>
+    <p class="small">We will email you. Every night. But don't worry, we'll never share your email with anyone.</p>
+</div>
+
 {% endblock %}

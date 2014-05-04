@@ -7,10 +7,19 @@
 
 body, html {
     font-family: Helvetica, Arial, sans-serif;
-    background: #ecf0f1;
+    background: #fefefe;
     font-size: 16px;
     margin: 0;
     padding: 0;
+    color: #2c3e50;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+input:focus {
+    outline: none;
 }
 
 #content {
@@ -18,9 +27,32 @@ body, html {
     margin: 0 auto;
 }
 
+.well {
+    background: #efefef;
+    border-radius: 3px;
+}
+
+.example {
+    text-align: left;
+}
+
 .title {
     font-size: 2rem;
-    margin-top: 20px;
+    padding: 15px;
+    margin: 0;
+}
+
+.sub-title {
+    font-size: 1.3rem;
+    margin-top: 0;
+    padding: 15px;
+    border-bottom: 2px solid #3498db;
+    border-top: 2px solid #3498db;
+}
+
+#intro {
+    text-align: center;
+    margin-top: 50px;
 }
 
 .link {
@@ -29,15 +61,13 @@ body, html {
     font-weight: normal;
 }
 
-.sub-title {
-    font-size: 2rem;
-    margin-top: 0;
+.sign-up-section {
+    text-align: center;
+    margin-top: 50px;
 }
 
 .sign-up {
-    border-radius: 3px;
-    border: solid 1px #eee;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
 }
 
