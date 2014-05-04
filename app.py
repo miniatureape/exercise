@@ -79,7 +79,12 @@ def index():
 
     if request.method == 'POST':
         email = request.form['email']
+
+        if not email:
+            return render_template('index.html')
+
         user = Users.find_one({'email': email})
+
         if not user:
             print "creating new user"
             user_id = Users.create(email)
