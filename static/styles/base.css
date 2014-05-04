@@ -13,7 +13,7 @@ body, html {
     padding: 0;
 }
 
-content {
+#content {
     max-width: 600px;
     margin: 0 auto;
 }
