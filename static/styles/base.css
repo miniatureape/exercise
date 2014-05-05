@@ -82,12 +82,14 @@ input:focus {
     background: #3498db;
 }
 
-button {
+button, .button {
     font-size: 1rem;
     border-radius: 3px;
     font-weight: bold;
     border: none;
     padding: .8rem .8rem;
+    text-decoration: none;
+    color: #fff;
 }
 
 .stats {
@@ -308,6 +310,28 @@ button {
 #add-form .primary-btn {
     float: right;
     margin: 0 0 10px 0;
+}
+
+
+#delete-page .delete-btn {
+    background: #e74c3c;
+    color: #fff;
+    float: left;
+}
+
+#delete-page .button, #delete-page button {
+    margin: 0 5px 0 0;
+    display: block
+}
+
+#delete-page .cancel-btn {
+    background: #bdc3c7;
+    float: left;
+}
+
+.delete-form-wrapper {
+    margin: 0 auto;
+    width: 50%;
 }
 
 

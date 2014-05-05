@@ -46,13 +46,13 @@ def del_exercise(user_id, eid):
 @app.route("/user/<user_id>/delete", methods=['GET', 'POST'])
 def del_user(user_id):
 
+    user = Users.find_by_id(user_id)
     if request.method == 'POST' and request.form.get('confirmed', '1'):
-        user = Users.find_by_id(user_id)
         if user:
             Users.delete(user)
         return redirect('/')
 
-    return render_template('delete.html')
+    return render_template('delete.html', user=user)
 
 @app.route("/user/<user_id>/exercises", methods=['GET', 'POST'])
 def exercises(user_id):

@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
 {% block inner_content %}
 
-Really Delete?
+<div id="delete-page">
 
-<form method="post">
-    <input type="hidden" value="1" name="confirmed" />
-    <button>Yes!</button>
-</form>
-<button>Nope</button>
+    <h3>Really Delete?</h3>
+    <p>Clicking "Delete" will delete all your data. It is irreversable and permanent.</p>
+    <p>We'll be sorry to see you go. But we understand. Some people don't have the willpower to carry on.</p>
+
+    <div class="delete-form-wrapper">
+        <form method="post">
+            <input type="hidden" value="1" name="confirmed" />
+            <button class="delete-btn">Delete My Account!</button>
+        </form>
+        <a class="button cancel-btn" href="/user/{{ user._id }}/exercises">Cancel</a>
+    </div>
+
+</div>
 {% endblock %}
