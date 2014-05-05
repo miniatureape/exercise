@@ -347,5 +347,10 @@ button {
     .delete-exercise-form button {
         line-height: 2.2rem;
     }
+
+    #intro, .sign-up-section {
+        padding: 0 10px;
+        text-align: left;
+    }
 }
 
