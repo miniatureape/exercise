@@ -1,7 +1,6 @@
 (function() {
 
     window.Overlay = function(options) {
-
         this.mask = $(options.mask);
 
         this.header = this.mask.find('header');
@@ -36,7 +35,7 @@
         },
 
         setFooter: function(html) {
-            this.content.html(html);
+            this.footer.html(html);
         },
 
         renderHeader: function(data) {
@@ -66,7 +65,7 @@
         },
 
         close: function(e) {
-            if (e.target == this.mask.get(0)) {
+            if ($(e.target).hasClass('cancel')) {
                 this.isOpen = false;
                 this.mask.removeClass('show');
                 this.mask.trigger('close:overlay', this);

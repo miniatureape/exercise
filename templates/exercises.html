@@ -81,50 +81,42 @@
         </section>
     </section>
 
-    <div id="edit-overlay" class="exercise-overlay mask">
+    <div id="overlay" class="exercise-overlay mask cancel">
         <div class="overlay">
-            <header>
-                Edit
-                <span class="ss-icon icon-cancel"></span>
-            </header>
+            <header></header>
             <section></section>
-            <footer>
-                <button>Save</button>
-            </footer>
+            <footer></footer>
         </div>
     </div>
 
-    <div id="new-overlay" class="exercise-overlay mask">
-        <div class="overlay">
-            <header>
-                Add Exercise
-                <span class="ss-icon icon-cancel"></span>
-            </header>
-            <section>
-                <form>
-                    <label>Quantity</label>
-                    <input type="text" placeholder="Quantity" />
-                    <label>Description</label>
-                    <input type="text" placeholder="Description" />
-                    <label>Value</label>
-                    <input type="text" placeholder="Value" />
-                </form>
-            </section>
-            <footer>
-                <button>Save</button>
-            </footer>
-        </div>
-    </div>
+    <script type="text/html" id="edit-overlay-header-tpl">
+        Edit <%= name %>
+        <span class="ss-icon icon-cancel cancel"></span>
+    </script>
 
-    <script type="text/html" id="edit-overlay-content">
+    <script type="text/html" id="create-overlay-header-tpl">
+        Add Exercise
+        <span class="ss-icon icon-cancel cancel"></span>
+    </script>
+
+    <script type="text/html" id="overlay-content-tpl">
         <form>
             <label>Quantity</label>
-            <input type="text" placeholder="Quantity" value="<%= quantity %>" />
+            <input type="tel" placeholder="e.g. 25" value="<%= quantity %>" />
             <label>Description</label>
-            <input type="text" placeholder="Description" value="<%= name %>" />
+            <input type="text" placeholder="e.g. Pull ups" value="<%= name %>" />
             <label>Value</label>
-            <input type="text" placeholder="Value" value="<%= value %>" />
+            <input type="tel" placeholder="e.g. 20" value="<%= value %>" />
         </form>
+    </script>
+
+    <script type="text/html" id="edit-overlay-footer-tpl">
+        <button class="save">Save</button>
+        <button class="delete">Delete</button>
+    </script>
+
+    <script type="text/html" id="create-overlay-footer-tpl">
+        <button class="save wide">Save</button>
     </script>
 
 {% endblock %}
@@ -135,26 +127,48 @@
 
         (function() {
 
-            var editOverlay = new Overlay({
-                mask: '#edit-overlay',
-                contentTpl: $('#edit-overlay-content').html()
-            });
+            var overlay = new Overlay({mask: '#overlay'});
 
-            var newOverlay = new Overlay({
-                mask: '#new-overlay'
-            });
+            var contentTpl = getTemplate('#overlay-content-tpl');
+            var editHeaderTpl = getTemplate('#edit-overlay-header-tpl');
+            var editFooterTpl = getTemplate('#edit-overlay-footer-tpl');
+
+            var createHeaderTpl = getTemplate('#create-overlay-header-tpl');
+            var createFooterTpl = getTemplate('#create-overlay-footer-tpl');
+
+            function getTemplate(id) {
+                return _.template($(id).html())
+            }
+
+            function openEditOverlay(data) {
+                overlay.setHeader(editHeaderTpl(data));
+                overlay.setContent(contentTpl(data));
+                overlay.setFooter(editFooterTpl(data));
+                overlay.open();
+            }
+
+            function openCreateOverlay() {
+                var data = {
+                    name: null,
+                    quantity: null,
+                    value: null
+                }
+                overlay.setHeader(createHeaderTpl(data));
+                overlay.setContent(contentTpl(data));
+                overlay.setFooter(createFooterTpl(data));
+                overlay.open();
+            }
 
             var editBtns = $('.edit-exercise');
 
             editBtns.on('click', function() {
-                editOverlay.renderContent($(this).data());
-                editOverlay.open();
+                openEditOverlay($(this).data());
             });
 
             var addBtn = $('.add-btn');
 
             addBtn.on('click', function(e) {
-                newOverlay.open();
+                openCreateOverlay();
             });
 
             function DepositForm(form, bus) { 

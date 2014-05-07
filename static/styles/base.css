@@ -18,7 +18,7 @@ h2 {
     font-size: 1.5rem;
 }
 
-input:focus {
+input:focus, button {
     outline: none;
 }
 
@@ -378,30 +378,35 @@ button, .button {
     }
 }
 
+
+.exercise-overlay {}
+
 .mask {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, .3);
+    background: rgba(0, 0, 0, .5);
     padding: 30px;
     display: none;
     opacity: 0;
     -webkit-transition: .3s opacity;
 }
 
+.exercise-overlay .overlay {
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
 .mask.show {
     opacity: 1;
 }
 
-.overlay {
-    background: red;
-    border-radius: 5px;
-}
-
 .overlay header {
-    padding: 10px;
+    padding: 15px 10px;
     background: #34495e; 
     color: white;
     font-weight: bold;
@@ -419,8 +424,6 @@ button, .button {
     color: white;
 }
 
-.exercise-overlay {}
-
 .exercise-overlay label {
     display: block;
     font-weight: bold;
@@ -437,8 +440,27 @@ button, .button {
     float: right;
 }
 
+.exercise-overlay footer {
+    overflow: hidden;
+}
+
 .exercise-overlay footer button {
-    width: 100%;
+}
+
+.exercise-overlay footer .save {
+    width: 50%;
     background-color: #27ae60;
     display: block;
+    float: right;
+}
+
+.exercise-overlay footer .save.wide {
+    width: 100%;
+}
+
+.exercise-overlay footer .delete {
+    width: 30%;
+    background-color: #e74c3c;
+    display: block;
+    float: left;
 }
