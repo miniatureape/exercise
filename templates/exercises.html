@@ -24,27 +24,36 @@
     {% endif %}
 
     <section class="table-container" >
-        <section class="table exercise-table">
+        <section class="table ex-table">
+
             <header>
                 <div class="cell description">description</div>
                 <div class="cell value">log</div>
             </header>
+
             <section class="table-body">
                 {% for exercise in user.exercises %}
-                <div class="cell description">
-                    {{ exercise.name }}
-                    <form class="delete-exercise-form" method="post" action="/user/{{user._id}}/exercise/{{exercise.eid}}/delete">
-                        <button class="link"><i class="icon-pencil"></i></button>
-                    </form>
-                </div>
-                <div class="cell value">
-                    <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
-                        <button class="deposit ready">
-                            {{ exercise.value }}
-                            <i class="ready icon-ok"></i>
-                            <i class="waiting icon-spinner2 animate-spin"></i>
+                <div class="display-row">
+                    <div class="cell description">
+                        {{ exercise.name }}
+                        <button 
+                            class="edit-exercise link"
+                            data-quantity="{{ exercise.quantity }}"
+                            data-name="{{ exercise.name }}"
+                            data-value="{{ exercise.value }}"
+                            >
+                            <i class="icon-pencil"></i>
                         </button>
-                    </form>
+                    </div>
+                    <div class="cell value">
+                        <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
+                            <button class="deposit ready">
+                                {{ exercise.value }}
+                                <i class="ready icon-ok"></i>
+                                <i class="waiting icon-spinner2 animate-spin"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 {% endfor %}
             </section>
@@ -63,7 +72,7 @@
                     <div class="cell">
                         <label>Value</label>
                         <div>
-                            <input name="value" type="number" placeholder="e.g 20" />
+                            <input name="value" type="text" placeholder="e.g 20" />
                             <button class="primary-btn">Add</button>
                         </div>
                     </div>
@@ -71,6 +80,53 @@
             </footer>
         </section>
     </section>
+
+    <div id="edit-overlay" class="exercise-overlay mask">
+        <div class="overlay">
+            <header>
+                Edit
+                <span class="ss-icon icon-cancel"></span>
+            </header>
+            <section></section>
+            <footer>
+                <button>Save</button>
+            </footer>
+        </div>
+    </div>
+
+    <div id="new-overlay" class="exercise-overlay mask">
+        <div class="overlay">
+            <header>
+                Add Exercise
+                <span class="ss-icon icon-cancel"></span>
+            </header>
+            <section>
+                <form>
+                    <label>Quantity</label>
+                    <input type="text" placeholder="Quantity" />
+                    <label>Description</label>
+                    <input type="text" placeholder="Description" />
+                    <label>Value</label>
+                    <input type="text" placeholder="Value" />
+                </form>
+            </section>
+            <footer>
+                <button>Save</button>
+            </footer>
+        </div>
+    </div>
+
+    <script type="text/html" id="edit-overlay-content">
+        <form>
+            <label>Quantity</label>
+            <input type="text" placeholder="Quantity" value="<%= quantity %>" />
+            <label>Description</label>
+            <input type="text" placeholder="Description" value="<%= name %>" />
+            <label>Value</label>
+            <input type="text" placeholder="Value" value="<%= value %>" />
+        </form>
+    </script>
+
 {% endblock %}
 
 {% block page_scripts %}
@@ -78,6 +134,29 @@
     <script>
 
         (function() {
+
+            var editOverlay = new Overlay({
+                mask: '#edit-overlay',
+                contentTpl: $('#edit-overlay-content').html()
+            });
+
+            var newOverlay = new Overlay({
+                mask: '#new-overlay'
+            });
+
+            var editBtns = $('.edit-exercise');
+
+            editBtns.on('click', function() {
+                editOverlay.renderContent($(this).data());
+                editOverlay.open();
+            });
+
+            var addBtn = $('.add-btn');
+
+            addBtn.on('click', function(e) {
+                newOverlay.open();
+            });
+
             function DepositForm(form, bus) { 
                 this.form = $(form); 
                 this.button = this.form.find('button'); 
@@ -134,12 +213,6 @@
 
             $(document.body).on('new-balance', function(e, balance) {
                 $('.balance-amount').html(balance);
-            });
-
-            var addBtn = $('.add-btn');
-            var footer = $('.exercise-table footer');
-            addBtn.on('click', function(e) {
-                footer.addClass('open');
             });
 
             function confirmOnDelete (e) {

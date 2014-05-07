@@ -9,6 +9,7 @@ exercises: [{
     "eid": 123,
     "name": "abc",
     "value": "abc",
+    "quantity": 5,
 }]
 
 
