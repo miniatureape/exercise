@@ -65,7 +65,7 @@
         },
 
         close: function(e) {
-            if ($(e.target).hasClass('cancel')) {
+            if (!e || $(e.target).hasClass('cancel')) {
                 this.isOpen = false;
                 this.mask.removeClass('show');
                 this.mask.trigger('close:overlay', this);

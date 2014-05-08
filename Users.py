@@ -28,7 +28,7 @@ def setDb(mongo):
         db = mongo.db;
 
 def generate_id():
-    return '%030x' % random.randrange(16**8)
+    return '%08x' % random.randrange(16**8)
 
 def create_doc(email, id=None):
 
@@ -60,7 +60,7 @@ def find_by_id(user_id):
     return db.users.find_one({'_id': pymongo.ObjectId(user_id)})
 
 def update_exercise(user, data, eid):
-    for e in user.get(exercises, []):
+    for e in user.get('exercises', []):
         if e.get('eid') == eid:
             e.update(data)
     return user

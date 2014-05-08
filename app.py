@@ -54,23 +54,29 @@ def del_user(user_id):
 
     return render_template('delete.html', user=user)
 
-@app.route("/user/<user_id>/exercises", methods=['GET', 'POST'])
+@app.route("/user/<user_id>/exercises/edit", methods=['POST'])
+def edit_exercise(user_id):
+
+    user = Users.find_by_id(user_id)
+    eid = request.form.get('eid', None)
+
+    data = {
+        "name": request.form.get('name', 'Untitled'),
+        "value": int(request.form.get('value', 0)),
+        "quantity": int(request.form.get('value', 0)),
+    }
+
+    user = Users.set_exercise(user, data, eid)
+
+    return redirect('/user/%s/exercises' % user_id)
+
+@app.route("/user/<user_id>/exercises", methods=['GET'])
 def exercises(user_id):
 
     user = Users.find_by_id(user_id)
 
     if not user:
         return redirect('/')
-
-    if request.method == 'POST':
-        eid = request.form.get('eid', None)
-
-        data = {
-            "name": request.form.get('name', 'Untitled'),
-            "value": int(request.form.get('value', 0)),
-        }
-
-        user = Users.set_exercise(user, data, eid)
 
     return render_template('exercises.html', user=user)
 
@@ -86,7 +92,6 @@ def index():
         user = Users.find_one({'email': email})
 
         if not user:
-            print "creating new user"
             user_id = Users.create(email)
             return redirect('/user/%s/exercises?add=1' % user_id)
         else:

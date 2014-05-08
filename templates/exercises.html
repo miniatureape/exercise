@@ -35,10 +35,12 @@
                 {% for exercise in user.exercises %}
                 <div class="display-row">
                     <div class="cell description">
+                        {{ exercise.quantity }}
                         {{ exercise.name }}
                         <button 
                             class="edit-exercise link"
                             data-quantity="{{ exercise.quantity }}"
+                            data-eid="{{ exercise.eid }}"
                             data-name="{{ exercise.name }}"
                             data-value="{{ exercise.value }}"
                             >
@@ -64,19 +66,6 @@
                         <button class="primary-btn add-btn">New Exercise</button>
                     </div>
                 </div>
-                <form id="add-form" method="post">
-                    <div class="cell">
-                        <label>Description</label>
-                        <input name="name" type="text" placeholder="e.g. 25 Pull-ups" />
-                    </div>
-                    <div class="cell">
-                        <label>Value</label>
-                        <div>
-                            <input name="value" type="text" placeholder="e.g 20" />
-                            <button class="primary-btn">Add</button>
-                        </div>
-                    </div>
-                </form>
             </footer>
         </section>
     </section>
@@ -100,19 +89,24 @@
     </script>
 
     <script type="text/html" id="overlay-content-tpl">
-        <form>
+        <form action="/user/{{user._id}}/exercises/edit" method="post">
+            <% if (eid) { %>
+                <input type="hidden" name="eid" value="<%= eid %>" />
+            <% } %>
             <label>Quantity</label>
-            <input type="tel" placeholder="e.g. 25" value="<%= quantity %>" />
+            <input type="tel" name="quantity" placeholder="e.g. 25" value="<%= quantity %>" />
             <label>Description</label>
-            <input type="text" placeholder="e.g. Pull ups" value="<%= name %>" />
+            <input type="text" name ="name" placeholder="e.g. Pull ups" value="<%= name %>" />
             <label>Value</label>
-            <input type="tel" placeholder="e.g. 20" value="<%= value %>" />
+            <input type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
         </form>
     </script>
 
     <script type="text/html" id="edit-overlay-footer-tpl">
         <button class="save">Save</button>
-        <button class="delete">Delete</button>
+        <form method="post" action="/user/{{user._id}}/exercise/<%= eid %>/delete">
+            <button class="delete">Delete</button>
+        </form>
     </script>
 
     <script type="text/html" id="create-overlay-footer-tpl">
@@ -127,48 +121,70 @@
 
         (function() {
 
-            var overlay = new Overlay({mask: '#overlay'});
-
-            var contentTpl = getTemplate('#overlay-content-tpl');
-            var editHeaderTpl = getTemplate('#edit-overlay-header-tpl');
-            var editFooterTpl = getTemplate('#edit-overlay-footer-tpl');
-
-            var createHeaderTpl = getTemplate('#create-overlay-header-tpl');
-            var createFooterTpl = getTemplate('#create-overlay-footer-tpl');
-
             function getTemplate(id) {
                 return _.template($(id).html())
             }
 
-            function openEditOverlay(data) {
-                overlay.setHeader(editHeaderTpl(data));
-                overlay.setContent(contentTpl(data));
-                overlay.setFooter(editFooterTpl(data));
-                overlay.open();
-            }
+            var ExerciseEditor = function(options) {
+                this.overlay = options.overlay;
+                this.bus = options.bus;
+                this.editBtns = options.editBtns;
+                this.addBtn = options.addBtn;
 
-            function openCreateOverlay() {
-                var data = {
+                this.contentTpl = getTemplate('#overlay-content-tpl');
+                this.editHeaderTpl = getTemplate('#edit-overlay-header-tpl');
+                this.editFooterTpl = getTemplate('#edit-overlay-footer-tpl');
+
+                this.createHeaderTpl = getTemplate('#create-overlay-header-tpl');
+                this.createFooterTpl = getTemplate('#create-overlay-footer-tpl');
+
+                this.newFormData = {
+                    eid: null,
                     name: null,
                     quantity: null,
                     value: null
-                }
-                overlay.setHeader(createHeaderTpl(data));
-                overlay.setContent(contentTpl(data));
-                overlay.setFooter(createFooterTpl(data));
-                overlay.open();
+                };
+                this.initEvents();
             }
 
-            var editBtns = $('.edit-exercise');
+            _.extend(ExerciseEditor.prototype, {
 
-            editBtns.on('click', function() {
-                openEditOverlay($(this).data());
+                initEvents: function() {
+                    this.overlay.mask.on('click', '.save', _.bind(this.saveExercise, this));
+                    this.editBtns.on('click', _.bind(this.openEditOverlay, this));
+                    this.addBtn.on('click', _.bind(this.openCreateOverlay, this));
+                },
+
+                saveExercise: function() {
+                    var form = this.overlay.mask.find('form');
+                    form.submit();
+                },
+
+                openEditOverlay: function(e) {
+                    var data = $(e.currentTarget).data();
+                    this.overlay.setHeader(this.editHeaderTpl(data));
+                    this.overlay.setContent(this.contentTpl(data));
+                    this.overlay.setFooter(this.editFooterTpl(data));
+                    this.overlay.open();
+                },
+
+                openCreateOverlay: function() {
+                    var data = this.newFormData;
+                    overlay.setHeader(this.createHeaderTpl(data));
+                    overlay.setContent(this.contentTpl(data));
+                    overlay.setFooter(this.createFooterTpl(data));
+                    overlay.open();
+                }
+
             });
 
-            var addBtn = $('.add-btn');
+            var overlay = new Overlay({mask: '#overlay'});
 
-            addBtn.on('click', function(e) {
-                openCreateOverlay();
+            var editor = new ExerciseEditor({
+                overlay: overlay,
+                editBtns: $('.edit-exercise'),
+                addBtn: $('.add-btn'),
+                bus: $('#bus'),
             });
 
             function DepositForm(form, bus) { 
@@ -229,15 +245,6 @@
                 $('.balance-amount').html(balance);
             });
 
-            function confirmOnDelete (e) {
-                var result = confirm('In the future, this will allow editing, but now, clicking ok will delete.');
-                if (!result) {
-                    e.preventDefault();
-                }
-            }
-
-            var deleteExerciseForms = $('.delete-exercise-form');
-            deleteExerciseForms.on('submit', confirmOnDelete)
         
         })()
 

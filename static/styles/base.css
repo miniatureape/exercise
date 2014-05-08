@@ -273,13 +273,11 @@ button, .button {
     margin: 10px 0;
 }
 
-.ex-table footer.open #add-form {
+/*
+.ex-table footer.open .add-btn-row {
     display: block;
 }
-
-.ex-table footer.open .add-btn-row {
-    display: none;
-}
+*/
 
 .icon-pencil {
     color: white;
