@@ -89,7 +89,7 @@
     </script>
 
     <script type="text/html" id="overlay-content-tpl">
-        <form action="/user/{{user._id}}/exercises/edit" method="post">
+        <form class="edit-form" action="/user/{{user._id}}/exercises/edit" method="post">
             <% if (eid) { %>
                 <input type="hidden" name="eid" value="<%= eid %>" />
             <% } %>
@@ -156,7 +156,7 @@
                 },
 
                 saveExercise: function() {
-                    var form = this.overlay.mask.find('form');
+                    var form = this.overlay.mask.find('.edit-form');
                     form.submit();
                 },
 
