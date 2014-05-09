@@ -93,51 +93,50 @@ button, .button {
 }
 
 .stats {
-    overflow: auto;
-}
-
-.stats section {
-    padding: 1rem;
-    margin-bottom: 20px;
-    font-weight: bold;
+    overflow: hidden;
+    background: #2c3e50;
+    color: white;
     font-size: 1.5rem;
-    width: 33.3%;
-    float: left;
-    background: #ecf0f1;
-    color: #2c3e50;
-    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+    border-bottom: 1px solid #3498db;
+    padding: 0 10px;
 }
 
-.stats p {
-    font-size: 2.5rem;
-    margin: 0;
-}
-
-.stats label {
-    border-bottom: 1px solid #bdc3c7;
-    padding-bottom: 7px;
-    margin-bottom: 7px;
+.stats .icon-chart-bar {
     display: block;
+    float: left;
+}
+
+.stats ul {
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.stats li {
+    float: left;
+    margin-left: 15px;
+    padding-right: 20px;
+    border-right: 1px solid #34495e;
+}
+
+.stats li:last-child {
+    border: none;
+}
+
+.positive {
+    color: #27ae60;
+}
+
+.negative {
+    color: #f1c40f;
 }
 
 .stats .small {
     font-size: 1.2rem;
 }
-
-.stats .streak {
-    float: right;
-}
-
-.stats .balance {
-    float: left;
-}
-
-.stats .balance.positive {
-}
-
-.stats .balance.negative {
-}
-
 
 .table-container {
     padding: 10px;
@@ -149,7 +148,6 @@ button, .button {
         overflow: hidden;
         color: #ecf0f1;
         line-height: 3.5rem;
-        border-radius: 3px;
     }
 
     .ex-table .cell {
@@ -166,9 +164,8 @@ button, .button {
         width: 30%;
     }
 
-    .ex-table header {
-        font-weight: bold;
-        font-size: .8rem;
+    .ex-table footer {
+        padding: 0 10px;
     }
 
     .table-body {
@@ -261,10 +258,6 @@ button, .button {
     padding: 14px;
 }
 
-.add-btn-row {
-    text-align: right;
-}
-
 .primary-btn {
     line-height: 2rem;
     padding: 0 .5rem;
@@ -273,40 +266,12 @@ button, .button {
     margin: 10px 0;
 }
 
-/*
-.ex-table footer.open .add-btn-row {
-    display: block;
-}
-*/
-
 .icon-pencil {
     color: white;
 }
 
-#add-form {
-    display: none;
-    line-height: 1rem;
-    overflow: hidden;
-}
-
-#add-form label {
-    display: block;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-#add-form input {
-    padding: 7px;
-    margin: 0 0 10px 0;
-    border: 0;
-}
-
-.input-group {
-    float: left;
-}
-
 #add-form .primary-btn {
-    float: right;
+    width: 100%;
     margin: 0 0 10px 0;
 }
 
@@ -340,17 +305,12 @@ button, .button {
         padding: .6rem .4rem;
     }
 
-    .stats section {
-        padding: .5rem .25rem;
+    .stats {
+        font-size: 1rem;
     }
-
-    .stats p {
-        font-size: 1.3rem;
-    }
-
-    .stats label {
-        display: block;
-        font-size: .70rem;
+    .stats li {
+        padding-right: 5px;
+        margin-left: 10px
     }
 
     .stats .small {
@@ -380,11 +340,11 @@ button, .button {
 .exercise-overlay {}
 
 .mask {
-    position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, .5);
     padding: 30px;
     display: none;
@@ -445,14 +405,14 @@ button, .button {
 .exercise-overlay footer button {
 }
 
-.exercise-overlay footer .save {
+.save {
     width: 50%;
     background-color: #27ae60;
     display: block;
     float: right;
 }
 
-.exercise-overlay footer .save.wide {
+.wide {
     width: 100%;
 }
 

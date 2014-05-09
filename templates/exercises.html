@@ -3,34 +3,20 @@
 {% block inner_content %}
 
     {% if user.exercises %}
-    <section class="stats">
 
-        <section class="balance {% if user.balance > 0 %}positive{% else %}negative{% endif %}">
-            <label>Balance</label>
-            <p><span class="balance-amount">{{ user.balance }}</span> <span class="small">pts</span></p>
-        </section>
+    <div class="stats">
+        <i class="icon-chart-bar {% if user.balance > 0 %}positive{% else %}negative{% endif %}"></i>
+        <ul>
+            <li class="section balance"><span class="balance-amount">{{ user.balance }}</span> <span class="small">pts</span></li>
+            <li class="section streak-length">{{ user.streak }} <span class="small">Day{% if user.streak != 1 %}s{% endif %} Streak</span></li>
+            <li class="section streak-longest">{{ user.longest_streak }} <span class="small">Day{% if user.streak != 1 %}s{% endif %} Record</span></li>
+        </ul>
+    </div>
 
-        <section class="streak">
-            <label>Current Streak</label>
-            <p>{{ user.streak }} <span class="small">days</span></p>
-        </section>
-
-        <section class="longest_streak wide">
-            <label>Longest Streak</label>
-            <p>{{ user.longest_streak }} <span class="small">days</span></p>
-        </section>
-
-    </section>
     {% endif %}
 
-    <section class="table-container" >
+    <section>
         <section class="table ex-table">
-
-            <header>
-                <div class="cell description">description</div>
-                <div class="cell value">log</div>
-            </header>
-
             <section class="table-body">
                 {% for exercise in user.exercises %}
                 <div class="display-row">
@@ -51,7 +37,7 @@
                         <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
                             <button class="deposit ready">
                                 {{ exercise.value }}
-                                <i class="ready icon-ok"></i>
+                                <i class="ready icon-flash-1"></i>
                                 <i class="waiting icon-spinner2 animate-spin"></i>
                             </button>
                         </form>
@@ -60,12 +46,7 @@
                 {% endfor %}
             </section>
             <footer {% if not user.exercises %} class="open" {% endif %}>
-                <div class="add-btn-row">
-                    <div class="cell">&nbsp;</div>
-                    <div class="cell">
-                        <button class="primary-btn add-btn">New Exercise</button>
-                    </div>
-                </div>
+                <button class="primary-btn add-btn wide">New Exercise</button>
             </footer>
         </section>
     </section>
