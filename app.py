@@ -63,7 +63,7 @@ def edit_exercise(user_id):
     data = {
         "name": request.form.get('name', 'Untitled'),
         "value": int(request.form.get('value', 0)),
-        "quantity": int(request.form.get('value', 0)),
+        "quantity": int(request.form.get('quantity', 0)),
     }
 
     user = Users.set_exercise(user, data, eid)
