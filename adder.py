@@ -17,7 +17,8 @@ def deduct(user):
 
         if user['streak'] > user['longest_streak']:
             user['longest_streak'] = user['streak']
-
+    else:
+        user['streak'] = 0
 
     user['balance'] = user['balance'] - 100
     user['last_deducted'] = datetime.combine(now, datetime.min.time())
