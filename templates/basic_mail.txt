@@ -2,9 +2,9 @@ Hello {{ user.email }}
 
 Your balance is {{ user.balance }}.
 
-Your current streak has been {{ user.longest_streak }}
+Your current streak has been: {{ user.streak }}
 
-Your longest streak has been {{ user.streak }}
+Your longest streak has been: {{ user.longest_streak }}
 
 <a href="http://107.170.94.82/user/{{ user._id }}/exercises">Go log some exercises!</a>
 
