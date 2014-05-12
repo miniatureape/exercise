@@ -4,6 +4,7 @@ import smtplib
 from pymongo import MongoClient
 from datetime import date
 from datetime import datetime
+from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from jinja2 import Environment, FileSystemLoader
 
@@ -11,6 +12,7 @@ file_dir = os.path.dirname(__file__)
 print file_dir
 env = Environment(loader=FileSystemLoader(os.path.join(file_dir, 'templates')))
 template = env.get_template('basic_mail.txt')
+html_template = env.get_template('html_mail_inlined.html')
 
 client = MongoClient('localhost', 27017)
 
@@ -45,15 +47,25 @@ def send_msg(user):
     session.quit()
 
 def make_msg(user):
-    msg = MIMEText(create_email_text(user))
+    msg = MIMEMultipart('alternative')
+
     msg['Subject'] = SUBJECT
     msg['From'] = GMAIL_USERNAME
     msg['To'] = user.get('email')
 
+    text = create_email_text(user)
+    html = create_email_html(user)
+
+    msg.attach(text)
+    msg.attach(html)
+
     return msg
 
 def create_email_text(user):
-    return template.render(user=user)
+    return MIMEText(template.render(user=user), 'plain')
+
+def create_email_html(user):
+    return MIMEText(html_template.render(user=user), 'html')
 
 def mail(user):
     print "Sending mail to: %s" % user.get('email')
@@ -63,6 +75,11 @@ def mail(user):
 
 if __name__ == '__main__':
 
+    force = False;
+
+    if len(sys.argv) > 1:
+        force = sys.argv[1] == '-f'
+
     print "Started mail script at: %s" % datetime.now().strftime("%c")
 
     assert APP_PASS != None, "Need to set $GOOGLE_APP_PASS first. Exiting"
@@ -70,7 +87,7 @@ if __name__ == '__main__':
     for user in users:
         print "Checking: %s" % user.get('email')
         last_mail = user.get('last_mail')
-        if not last_mail:
+        if not last_mail or force:
             mail(user)
         else:
             delta = now - last_mail.date()

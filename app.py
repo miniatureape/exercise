@@ -100,5 +100,14 @@ def index():
 
     return render_template('index.html')
 
+@app.route("/user/<user_id>/email", methods=['GET'])
+def render_daily_mail(user_id):
+
+    user = Users.find_by_id(user_id)
+    if not user:
+        return redirect('/')
+
+    return render_template('html_mail.html', user=user)
+
 if __name__ == "__main__":
     app.run()

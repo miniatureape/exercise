@@ -1,0 +1,99 @@
+<style>
+
+    #content {
+        font-family: Helvetica, Arial, sans-serif;
+        color: white;
+    }
+
+    a {
+        text-decoration: none;
+        color: #95a5a6;
+    }
+
+    h1, h2, h3 {
+        padding: 20px;
+        margin: 0;
+    }
+
+    h4 {
+        padding: 10px;
+        margin: 0;
+    }
+
+    .salutation {
+        background-color: #f1c40f;
+    }
+    
+    .feedback {
+        background-color: #2980b9;
+    }
+
+    .interstitial {
+        text-align: center;
+        background-color: #2c3e50;
+    }
+
+    .stats {
+        text-align: center;
+    }
+
+    .huge {
+        font-size: 64px;
+
+    }
+
+    .money {
+        background-color: #2ecc71;
+        border-bottom: 1px solid #27ae60;
+    }
+
+    .debt {
+        background-color: #f39c12;
+        border-bottom: 1px solid #f39c12;
+    }
+
+    .record {
+        background-color: #ecf0f1;
+        color: #2c3e50;
+    }
+
+    .deposit {
+        display: block;
+        padding: 10px;
+        float: right;
+        text-decoration: none;
+        font-size: 18px;
+        background: #f39c12;
+        color: white;
+    }
+
+    .delete {
+        text-align: center;
+    }
+
+
+</style>
+
+    <div id="content">
+        <h1 class="salutation">
+            Good Morning.
+            <a class='deposit' href="http://107.170.94.82/user/{{ user._id }}/exercises">Go Log</a>
+        </h1>
+        {% if user.balance >= -100 %}
+        <h2 class="feedback">Nice Job Yesterday</h2>
+        {% endif %}
+        <h3 class='interstitial'>Here's the News</h3>
+        <div class="stats {% if user.balance >=0 %}money{% else %}debt{% endif %}">
+            <h4>Current Balance</h4>
+            <h1 class="huge">{{ user.balance }}</h1>
+        </div>
+        <div class="stats {% if user.streak >0 %}money{% else %}debt{% endif %}">
+            <h4>Current Streak</h4>
+            <h1 class="huge">{{ user.streak}}</h1>
+        </div>
+        <div class="stats record">
+            <h4>Record Streak</h4>
+            <h1 class="huge">{{ user.longest_streak}}</h1>
+        </div>
+        <a class="delete" href="http://107.170.94.82/user/{{ user._id }}/delete">Sick of this? Delete your account</a>
+    </div>

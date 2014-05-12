@@ -1,0 +1,29 @@
+<!-- Inliner Build Version 4380b7741bb759d6cb997545f3add21ad48f010b -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head></head>
+<body><div id="content" style="font-family: Helvetica, Arial, sans-serif; color: white;">
+        <h1 class="salutation" style="background: #f1c40f; margin: 0; padding: 20px;">
+            Good Morning.
+            <a class="deposit" href="http://107.170.94.82/user/{{ user._id }}/exercises" style="text-decoration: none; color: white; display: block; float: right; font-size: 18px; background: #f39c12; padding: 10px;">Go Log</a>
+        </h1>
+        {% if user.balance >= -100 %}
+        <h2 class="feedback" style="background: #2980b9; margin: 0; padding: 20px;">Nice Job Yesterday</h2>
+        {% endif %}
+        <h3 class="interstitial" style="text-align: center; background: #2c3e50; margin: 0; padding: 20px;" align="center">Here's the News</h3>
+        <div class="stats" style="text-align: center; {% if user.streak > 0 %}background-color: #2ecc71; border-bottom: 1px solid #27ae60; {% else %}background-color: #f39c12; border-bottom: 1px solid #f39c12;{% endif %}" align="center">
+            <h4 style="margin: 0; padding: 10px;">Current Balance</h4>
+            <h1 class="huge" style="font-size: 64px; margin: 0; padding: 20px;">{{ user.balance }}</h1>
+        </div>
+        <div class="stats" style="text-align: center; {% if user.streak > 0 %}background-color: #2ecc71; border-bottom: 1px solid #27ae60; {% else %}background-color: #f39c12; border-bottom: 1px solid #f39c12;{% endif %}" align="center">
+            <h4 style="margin: 0; padding: 10px;">Current Streak</h4>
+            <h1 class="huge" style="font-size: 64px; margin: 0; padding: 20px;">{{ user.streak}}</h1>
+        </div>
+        <div class="stats record" style="text-align: center; color: #2c3e50; background: #ecf0f1;" align="center">
+            <h4 style="margin: 0; padding: 10px;">Record Streak</h4>
+            <h1 class="huge" style="font-size: 64px; margin: 0; padding: 20px;">{{ user.longest_streak}}</h1>
+        </div>
+        <a class="delete" href="http://107.170.94.82/user/{{ user._id }}/delete" style="text-decoration: none; color: #95a5a6; text-align: center;">Sick of this? Delete your account</a>
+    </div></body>
+</html>
+
