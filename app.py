@@ -9,7 +9,7 @@ import json
 import Users
 
 app = Flask('goal')
-app.debug = True
+app.config.from_envvar('EXERCISE_APP_SETTINGS')
 mongo = pymongo.PyMongo(app)
 
 Users.setApp(app)
