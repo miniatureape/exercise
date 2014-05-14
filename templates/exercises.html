@@ -225,6 +225,7 @@
             });
 
             $(document.body).on('new-balance', function(e, balance) {
+                    $('.icon-chart-bar').removeClass('positive negative').addClass(balance >= 0 ? 'positive' : 'negative');
                 $('.balance-amount').html(balance);
             });
 
