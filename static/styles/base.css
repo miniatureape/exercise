@@ -422,3 +422,27 @@ button, .button {
     display: block;
     float: left;
 }
+
+.flashes {
+    border-radius: 3px;
+    overflow: hidden;
+    list-style-type: none;
+    text-align: left;
+    color: white;
+    padding: 0;
+    margin: 7px 0;
+} 
+
+.flashes.error {
+    border: 1px solid #c0392b;
+}
+
+.flashes li {
+    padding: 10px;
+    border-bottom: 1px solid;
+    background: #c0392b;
+}
+
+.flashes li:last-child {
+    border: none;
+}

@@ -3,6 +3,7 @@ from flask import request
 from flask import redirect
 from flask import render_template
 from flask import jsonify
+from flask import flash
 from flask.ext import pymongo
 from bson import json_util
 import json
@@ -91,12 +92,13 @@ def index():
 
         user = Users.find_one({'email': email})
 
+
         if not user:
             user_id = Users.create(email)
             return redirect('/user/%s/exercises?add=1' % user_id)
         else:
-            "email already registered"
-            pass
+            print "flashing message"
+            flash('Sorry, this email has already been registered. You should already be getting a daily email.', 'error')
 
     return render_template('index.html')
 
