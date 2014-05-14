@@ -16,6 +16,10 @@ mongo = pymongo.PyMongo(app)
 Users.setApp(app)
 Users.setDb(mongo)
 
+def flash_list(flashes, category):
+    for item in flashes:
+        flash(item, category)
+
 def jsonifym(d):
     "jsonifier that works with mongo objects"
     return json.dumps(d, default=json_util.default)
@@ -61,13 +65,26 @@ def edit_exercise(user_id):
     user = Users.find_by_id(user_id)
     eid = request.form.get('eid', None)
 
-    data = {
-        "name": request.form.get('name', 'Untitled'),
-        "value": int(request.form.get('value', 0)),
-        "quantity": int(request.form.get('quantity', 0)),
-    }
+    data = {}
 
-    user = Users.set_exercise(user, data, eid)
+    errors = []
+
+    data['name'] = request.form.get('name', 'Untitled')
+
+    try:
+        data['quantity'] = int(request.form.get('quantity', 0))
+    except:
+        errors.append('Quantity must be only digits 0-9')
+    try:
+        data['value'] = int(request.form.get('value', 0))
+    except:
+        errors.append('Value must be only digits 0-9')
+
+    if not errors:
+        user = Users.set_exercise(user, data, eid)
+    else:
+        print errors
+        flash_list(errors, 'error')
 
     return redirect('/user/%s/exercises' % user_id)
 

@@ -70,6 +70,21 @@ def add_exercise(user, data):
     user.get('exercises').append(data)
     return user
 
+def validate_exercise(data):
+    errors = [];
+
+    try:
+        data.get(quantity)
+    except:
+        errors.append('Quantity must be only digits 0-9')
+
+    try:
+        data.get(value)
+    except:
+        errors.append('Value must be only digits 0-9')
+    
+    return errors
+
 def set_exercise(user, data, eid=None):
 
     if eid:
