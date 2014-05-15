@@ -352,7 +352,7 @@ button, .button {
     -webkit-transition: .3s opacity;
 }
 
-.exercise-overlay .overlay {
+.overlay {
     max-width: 400px;
     margin: 0 auto;
     border-radius: 3px;
@@ -382,27 +382,27 @@ button, .button {
     color: white;
 }
 
-.exercise-overlay label {
+.overlay label {
     display: block;
     font-weight: bold;
 }
 
-.exercise-overlay input {
+.overlay input {
     display: block;
     padding: 7px 7px 7px 0;
     margin: 0 0 10px 0;
     border: 0;
 }
 
-.exercise-overlay .icon-cancel {
+.overlay .icon-cancel {
     float: right;
 }
 
-.exercise-overlay footer {
+.overlay footer {
     overflow: hidden;
 }
 
-.exercise-overlay footer button {
+.overlay footer button {
 }
 
 .save {
@@ -445,4 +445,14 @@ button, .button {
 
 .flashes li:last-child {
     border: none;
+}
+
+.quick-log {
+    background-color: #16a085;
+}
+
+.btn-cell {
+    width: 50%;
+    float: left;
+    padding: 5px;
 }

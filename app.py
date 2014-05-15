@@ -26,9 +26,13 @@ def jsonifym(d):
 
 
 @app.route("/user/<user_id>/deposit/<int:amount>", methods=['POST'])
+@app.route("/user/<user_id>/deposit", methods=['POST'], defaults={'amount': None})
 def deposit(user_id, amount):
 
     user = Users.find_by_id(user_id)
+
+    if not amount:
+        amount = int(request.form.get('amount'))
 
     if user:
         Users.deposit(user, amount, request.form.get('date'))

@@ -47,8 +47,15 @@
                 </div>
                 {% endfor %}
             </section>
-            <footer {% if not user.exercises %} class="open" {% endif %}>
-                <button class="primary-btn add-btn wide">New Exercise</button>
+            <footer>
+                <div class='btn-cell'>
+                    <button class="primary-btn quick-log wide">
+                        <i class="ready icon-flash-1"></i> Quick Log
+                    </button>
+                </div>
+                <div class='btn-cell'>
+                    <button class="primary-btn add-btn wide">New Exercise</button>
+                </div>
             </footer>
         </section>
     </section>
@@ -58,6 +65,25 @@
             <header></header>
             <section></section>
             <footer></footer>
+        </div>
+    </div>
+
+    <div id="ql-overlay" class="mask cancel">
+        <div class="overlay">
+            <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit">
+            <header>Quick Log
+                <span class="ss-icon icon-cancel cancel"></span>
+            </header>
+            <section>
+                <p>Quickly log some exercise you don't normally do.</p>
+                <input type="hidden" name="name" value="__QL__" /> 
+                <label>Value</label>
+                <input type="tel" name="amount" placeholder="e.g. 20" /> 
+            </section>
+            <footer>
+                <button class="primary-btn wide">Log</button>
+            </footer>
+            </form>
         </div>
     </div>
 
@@ -162,12 +188,20 @@
             });
 
             var overlay = new Overlay({mask: '#overlay'});
+            var quickLogOverlay = new Overlay({mask: '#ql-overlay'});
+
 
             var editor = new ExerciseEditor({
                 overlay: overlay,
                 editBtns: $('.edit-exercise'),
                 addBtn: $('.add-btn'),
                 bus: $('#bus'),
+            });
+
+            var quickLog = $('.quick-log');
+
+            quickLog.on('click', function(e) {
+                quickLogOverlay.open();
             });
 
             function DepositForm(form, bus) { 
@@ -225,8 +259,9 @@
             });
 
             $(document.body).on('new-balance', function(e, balance) {
-                    $('.icon-chart-bar').removeClass('positive negative').addClass(balance >= 0 ? 'positive' : 'negative');
+                $('.icon-chart-bar').removeClass('positive negative').addClass(balance >= 0 ? 'positive' : 'negative');
                 $('.balance-amount').html(balance);
+                quickLogOverlay.close();
             });
 
         
