@@ -3,9 +3,8 @@ import sys
 import smtplib  
 from datetime import date
 from datetime import datetime
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 
+import sendgrid
 from pymongo import MongoClient
 from jinja2 import Environment, FileSystemLoader
 
@@ -14,9 +13,9 @@ MAX_DEBT = 500
 class MailMan(object):
 
     PLAIN_TPL_NAME = 'plain-mail.txt'
-    HTML_TPL_NAME  = 'html-mail.html'
+    HTML_TPL_NAME  = 'html-mail-inlined.html'
 
-    subject = 'Here\s Your Daily Balance'
+    subject = 'Here\'s Your Daily Balance'
     return_addr = 'info@excercredit.com'
 
     def __init__(self, options):
@@ -46,38 +45,36 @@ class MailMan(object):
          return msg
 
     def create_html_body(self, user, msgs):
-        return MIMEText(self.html_tpl.render(user=user, msgs=msgs), 'html')
+        return self.html_tpl.render(user=user, msgs=msgs)
 
     def create_plain_body(self, user, msgs):
-        return MIMEText(self.plain_tpl.render(user=user, msgs=msgs), 'plain')
+        return self.plain_tpl.render(user=user, msgs=msgs)
 
     def mail(self, user, msgs):
         email = user.get('email')
-        envelope = self.create_envelope(email)
 
-        envelope.attach(self.create_plain_body(user, msgs))
-        envelope.attach(self.create_html_body(user, msgs))
+        print self.options.smtp_username, self.options.smtp_password
+        sg = sendgrid.SendGridClient(self.options.smtp_username, self.options.smtp_password)
 
-        session = smtplib.SMTP(self.options.smtp_server, 587)
-        session.ehlo()
-        session.starttls()
-        session.login(self.options.smtp_username, self.options.smtp_password)
+        message = sendgrid.Mail()
+        message.add_to(email)
+        message.set_subject(self.subject)
+        message.set_html(self.create_html_body(user, msgs))
+        message.set_text(self.create_plain_body(user, msgs))
+        message.set_from(self.return_addr)
 
-        msg_str = envelope.as_string();
+        status, msg = sg.send(message)
 
-        print("Message for %s: %s" % (email, msg_str.replace('\n', '')))
-
-        try: 
-            session.sendmail(self.options.smtp_username, email, msg_str)
-        except smtplib.SMTPRecipientsRefused:
-            print("Could not send message to %s" % email_address)
+        print("Message for %s: %s" % (email, msg))
 
     def email_user(self, user, msgs):
 
         if self.should_mail(user):
             self.mail(user, msgs)
+            return True
         else:
             print("Skipping: %s. Already emailed today." % user.get('email'))
+            return False
 
 
 class Nightly(object):
@@ -123,18 +120,25 @@ class Nightly(object):
         user['balance'] = user['balance'] - deduction
         user['last_deducted'] = datetime.combine(date.today(), datetime.min.time())
 
+    def save(self, user):
+        self.db.users.save(user)
+
     def update_account(self, user):
 
         if self.should_deduct(user):
             self.set_streak(user)
             self.deduct(user)
             self.limit(user)
+            self.save(user)
         else:
             print("Skipping: %s. Already deducted today." % user.get('email'))
 
     def send_email(self, user):
-        self.mailman.email_user(user, self.msgs)
-        print("sending email");
+        sent = self.mailman.email_user(user, self.msgs)
+
+        if sent:
+            user['last_mail'] = datetime.combine(date.today(), datetime.min.time())
+            self.save(user)
 
     def do_nightly(self, user):
         print("Processing user: %s" % user.get('email'));
