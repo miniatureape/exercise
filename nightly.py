@@ -35,15 +35,6 @@ class MailMan(object):
         delta = date.today() - last_mail.date()
         return delta.days > 0
 
-    def create_envelope(self, email):
-         msg = MIMEMultipart('alternative')
-
-         msg['Subject'] = self.subject
-         msg['From'] = self.return_addr
-         msg['To'] = email
-
-         return msg
-
     def create_html_body(self, user, msgs):
         return self.html_tpl.render(user=user, msgs=msgs)
 
@@ -53,7 +44,6 @@ class MailMan(object):
     def mail(self, user, msgs):
         email = user.get('email')
 
-        print self.options.smtp_username, self.options.smtp_password
         sg = sendgrid.SendGridClient(self.options.smtp_username, self.options.smtp_password)
 
         message = sendgrid.Mail()
@@ -76,6 +66,21 @@ class MailMan(object):
             print("Skipping: %s. Already emailed today." % user.get('email'))
             return False
 
+    def test(self, email, text)
+        print("Testing: %s" % email)
+
+        sg = sendgrid.SendGridClient(self.options.smtp_username, self.options.smtp_password)
+
+        message = sendgrid.Mail()
+        message.add_to(email)
+        message.set_subject("Test Email")
+        message.set_text(text)
+        message.set_from("justin.donato@gmail.com")
+
+        status, msg = sg.send(message)
+
+        print(status)
+        print(msg)
 
 class Nightly(object):
 
@@ -157,6 +162,7 @@ class Nightly(object):
         for user in self.get_users():
             self.do_nightly(user)
 
+
 if __name__ == '__main__':
 
     """ This job is responsible for updating a user's data
@@ -189,11 +195,19 @@ if __name__ == '__main__':
                      action="store", type="string", dest="smtp_user",
                      help="Username for SMTP server")
 
+    parser.add_option('-t', '--test', 
+                     action="store", type="string", dest="test",
+                     help="Send test message")
+
     (options, args) = parser.parse_args()
 
     if not options.smtp_password:
         print("Must set SMTP_PASS or run with --smtp-password option.")
         sys.exit()
+
+    if options.test:
+        MailMan(options)
+
 
     mailman = MailMan(options)
     nightly = Nightly(mailman)
