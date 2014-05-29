@@ -206,7 +206,8 @@ if __name__ == '__main__':
         sys.exit()
 
     if options.test:
-        MailMan(options)
+        mailman =  MailMan(options)
+        mailman.test(options.test, "This is a test")
 
 
     mailman = MailMan(options)
