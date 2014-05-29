@@ -5,7 +5,7 @@
 <body><div id="content" style="font-family: Helvetica, Arial, sans-serif; color: white;">
         <h1 class="salutation" style="background: #f1c40f; margin: 0; padding: 20px;">
             Good Morning.
-            <a class="deposit" href="http://107.170.94.82/user/{{ user._id }}/exercises" style="text-decoration: none; color: white; display: block; float: right; font-size: 18px; background: #f39c12; padding: 10px;">Go Log</a>
+            <a class="deposit" href="http://www.exercredit.com/user/{{ user._id }}/exercises" style="text-decoration: none; color: white; display: block; float: right; font-size: 18px; background: #f39c12; padding: 10px;">Go Log</a>
         </h1>
         {% if user.balance >= -100 %}
         <h2 class="feedback" style="background: #2980b9; margin: 0; padding: 20px;">Nice Job Yesterday</h2>
@@ -23,7 +23,7 @@
             <h4 style="margin: 0; padding: 10px;">Record Streak</h4>
             <h1 class="huge" style="font-size: 64px; margin: 0; padding: 20px;">{{ user.longest_streak}}</h1>
         </div>
-        <a class="delete" href="http://107.170.94.82/user/{{ user._id }}/delete" style="text-decoration: none; color: #95a5a6; text-align: center;">Sick of this? Delete your account</a>
+        <a class="delete" href="http://www.exercredit.com/user/{{ user._id }}/delete" style="text-decoration: none; color: #95a5a6; text-align: center;">Sick of this? Delete your account</a>
     </div></body>
 </html>
 
