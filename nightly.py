@@ -66,7 +66,7 @@ class MailMan(object):
             print("Skipping: %s. Already emailed today." % user.get('email'))
             return False
 
-    def test(self, email, text)
+    def test(self, email, text):
         print("Testing: %s" % email)
 
         sg = sendgrid.SendGridClient(self.options.smtp_username, self.options.smtp_password)
