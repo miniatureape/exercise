@@ -208,7 +208,7 @@ if __name__ == '__main__':
     if options.test:
         mailman =  MailMan(options)
         mailman.test(options.test, "This is a test")
-
+        sys.exit()
 
     mailman = MailMan(options)
     nightly = Nightly(mailman)
