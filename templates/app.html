@@ -27,9 +27,16 @@
                 <ol class="exercises">
                     {% for exercise in user.exercises %}
                     <li class="exercise">
-                        <div class="cell description">
-                            {{ exercise.quantity }}
-                            {{ exercise.name }}
+                        <div class="description">
+                            <span class="quantity">{{ exercise.quantity }}</span>
+                            <span class="name">{{ exercise.name }}</span>
+                            <span class="edit-btn"><i class="icon-pencil"></i></span>
+                        </div>
+                        <div class="deposit">
+                            <span class="icon"><i class="icon-ok"></i></span>
+                            <span class="value">{{ exercise.value }}</span>
+                        </div>
+                        <!--
                             <button 
                                 class="edit-exercise link"
                                 data-quantity="{{ exercise.quantity }}"
@@ -39,8 +46,6 @@
                                 >
                                 <i class="icon-pencil"></i>
                             </button>
-                        </div>
-                        <div class="cell value">
                             <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
                                 <button class="deposit ready">
                                     <i class="ready icon-flash-1"></i>
@@ -48,7 +53,7 @@
                                     <i class="waiting icon-spinner2 animate-spin"></i>
                                 </button>
                             </form>
-                        </div>
+                        -->
                     </li>
                     {% endfor %}
                 </ol>

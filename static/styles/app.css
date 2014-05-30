@@ -8,16 +8,17 @@
 
 .logo .bar {
     position: absolute;
-    left: 50%;
+    left: 41%;
     top: 2px;
     height: 110%;
-    width: 2px;
+    width: 3px;
     background: white;
+    -webkit-transform: rotate(6deg);
 }
 
 header {
     position: fixed;
-    background: #27ae60;
+    background: #2980b9;
     color: white;
     padding: 16px;
     width: 100%;
@@ -67,7 +68,7 @@ header .balance {
 .active-indicator {
     width: 50%;
     height: 3px;
-    background: #f1c40f;
+    background: #8FE6FF;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -88,6 +89,32 @@ ol, ul {
 
 .exercises .exercise {
     overflow: hidden;
+    padding: 14px 10px;
+}
+
+.exercise .description {
+    float: left;
+}
+
+.exercise .deposit {
+    float: right;
+}
+
+.edit-btn {
+    display: none;
+}
+
+.exercise.active .edit-btn {
+    display: inline;
+}
+
+.name {
+    font-weight: bold;
+    margin-left: 7px;
+}
+
+.icon {
+    color: #eee;
 }
 
 /*
