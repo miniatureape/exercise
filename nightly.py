@@ -8,7 +8,7 @@ import sendgrid
 from pymongo import MongoClient
 from jinja2 import Environment, FileSystemLoader
 
-MAX_DEBT = 500
+MAX_DEBT = -500
 
 class MailMan(object):
 
@@ -111,9 +111,11 @@ class Nightly(object):
                 print("User: %s set a streak record with %s days." % (user.get('email'), user.get('streak')))
                 user['longest_streak'] = user['streak']
                 self.msgs.append("NEW_RECORD")
+        else:
+            user['streak'] = 0
 
     def limit(self, user):
-        if user['balance'] >= MAX_DEBT:
+        if user['balance'] <= MAX_DEBT:
             print("Limiting %s to max of %s" % (user.get('email'), MAX_DEBT))
             user['balance'] = MAX_DEBT
             self.msgs.append('REACHED_MAX_DEBT')
@@ -157,7 +159,7 @@ class Nightly(object):
 
     def run(self):
 
-        print("Starting nightly job at: %s", datetime.now().strftime("%c"))
+        print("Starting nightly job at: %s" % datetime.now().strftime("%c"))
 
         for user in self.get_users():
             self.do_nightly(user)
