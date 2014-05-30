@@ -100,7 +100,7 @@ def exercises(user_id):
     if not user:
         return redirect('/')
 
-    return render_template('app.html', user=user)
+    return render_template('app.html', user=user, app_context=jsonifym(user))
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
