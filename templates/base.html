@@ -6,8 +6,9 @@
         {% block css %}
         <link href="/static/styles/base.css" rel="stylesheet"></link>
         {% endblock %}
+        {% block page_css %}{% endblock %}
     </head>
-    <body>
+    <body id="{% block page_name %}{% endblock %}">
         <script id="bus"></script>
 
         {% block outer_content %}
