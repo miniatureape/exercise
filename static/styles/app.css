@@ -1,0 +1,343 @@
+.logo {
+    position: relative;
+    font-weight: bold;
+    font-size: 24px;
+    width: 16px;
+    height: 22px;
+}
+
+.logo .bar {
+    position: absolute;
+    left: 50%;
+    top: 2px;
+    height: 110%;
+    width: 2px;
+    background: white;
+}
+
+header {
+    position: fixed;
+    background: #27ae60;
+    color: white;
+    padding: 16px;
+    width: 100%;
+    max-width: 600px;
+    height: 60px;
+}
+
+header h1 {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+header .logo {
+    float: left;
+}
+
+header .balance {
+    float: right;
+    border: 1px solid white;
+    border-radius: 3px;
+    padding: 7px;
+    font-weight: bold;
+}
+
+#body {
+    padding-top: 60px;
+}
+
+.main-nav {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid #bdc3c7;
+}
+.main-nav .tab {
+    display: block;
+    width: 50%;
+    float: left;
+    text-align: center;
+    padding: 12px;
+}
+
+.main-nav .tab.active {
+    font-weight: bold;
+}
+
+.active-indicator {
+    width: 50%;
+    height: 3px;
+    background: #f1c40f;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+ol, ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.panels {
+}
+
+.exercises {
+
+}
+
+.exercises .exercise {
+    overflow: hidden;
+}
+
+/*
+.stats {
+    overflow: hidden;
+    background: #2c3e50;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 50px;
+    border-bottom: 1px solid #3498db;
+    padding: 0 10px;
+}
+
+.stats .icon-chart-bar {
+    display: block;
+    float: left;
+}
+
+.stats ul {
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.stats li {
+    float: left;
+    margin-left: 15px;
+    padding-right: 20px;
+    border-right: 1px solid #34495e;
+}
+
+.stats li:last-child {
+    border: none;
+}
+
+.positive {
+    color: #27ae60;
+}
+
+.negative {
+    color: #f1c40f;
+}
+
+.stats .small {
+    font-size: 1.2rem;
+}
+*/
+
+.table .delete-exercise-form {
+    display: inline;
+}
+
+.exercise-list .deposit {
+    color: #ecf0f1;
+    background: #27ae60;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 7px;
+}
+
+.primary-btn {
+    line-height: 2rem;
+    padding: 0 .5rem;
+    color: #ecf0f1;
+    background: #3498db;
+    margin: 10px 0;
+}
+
+.icon-pencil {
+    color: white;
+}
+
+#add-form .primary-btn {
+    width: 100%;
+    margin: 0 0 10px 0;
+}
+
+
+#delete-page .delete-btn {
+    background: #e74c3c;
+    color: #fff;
+    float: left;
+}
+
+#delete-page .button, #delete-page button {
+    margin: 0 5px 0 0;
+    display: block
+}
+
+#delete-page .cancel-btn {
+    background: #bdc3c7;
+    float: left;
+}
+
+.delete-form-wrapper {
+    margin: 0 auto;
+    width: 50%;
+}
+
+
+
+.exercise-overlay {}
+
+.mask {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    padding: 30px;
+    display: none;
+    opacity: 0;
+    -webkit-transition: .3s opacity;
+}
+
+.overlay {
+    max-width: 400px;
+    margin: 0 auto;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.mask.show {
+    opacity: 1;
+}
+
+.overlay header {
+    padding: 15px 10px;
+    background: #34495e; 
+    color: white;
+    font-weight: bold;
+}
+
+.overlay section {
+    padding: 10px;
+    background: white;
+    color: #34495e; 
+}
+
+.overlay footer {
+    padding: 10px;
+    background: #34495e; 
+    color: white;
+}
+
+.overlay label {
+    display: block;
+    font-weight: bold;
+}
+
+.overlay input {
+    display: block;
+    padding: 7px 7px 7px 0;
+    margin: 0 0 10px 0;
+    border: 0;
+}
+
+.overlay .icon-cancel {
+    float: right;
+}
+
+.overlay footer {
+    overflow: hidden;
+}
+
+.overlay footer button {
+}
+
+.save {
+    width: 50%;
+    background-color: #27ae60;
+    display: block;
+    float: right;
+}
+
+.wide {
+    width: 100%;
+}
+
+.exercise-overlay footer .delete {
+    width: 30%;
+    background-color: #e74c3c;
+    display: block;
+    float: left;
+}
+
+.flashes {
+    border-radius: 3px;
+    overflow: hidden;
+    list-style-type: none;
+    text-align: left;
+    color: white;
+    padding: 0;
+    margin: 7px 0;
+} 
+
+.flashes.error {
+    border: 1px solid #c0392b;
+}
+
+.flashes li {
+    padding: 10px;
+    border-bottom: 1px solid;
+    background: #c0392b;
+}
+
+.flashes li:last-child {
+    border: none;
+}
+
+.quick-log {
+    background-color: #16a085;
+}
+
+.btn-cell {
+    width: 50%;
+    float: left;
+    padding: 5px;
+}
+
+@media (max-width: 768px) {
+
+    .stats {
+        font-size: 1rem;
+    }
+    .stats li {
+        padding-right: 9px;
+        margin-left: 8px
+    }
+
+    .stats .small {
+        font-size: .8rem;
+    }
+
+    #add-form {
+        overflow: hidden;
+    }
+
+    #add-form label {
+        font-size: .8rem;
+        margin: .3rem 0;
+    }
+
+    .delete-exercise-form button {
+        line-height: 2.2rem;
+    }
+
+}
+

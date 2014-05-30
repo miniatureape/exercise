@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
 {% block page_name %}index{% endblock %}
+{% block page_css %}
+<link href="/static/styles/index.css" rel="stylesheet"/>
+{% endblock %}
 
 {% block inner_content %}
 <h1 class="title">Exercredit</h1>
@@ -10,51 +13,6 @@
 
     <h3>How it Works</h3>
     <p>Create a workout of favorite exercises and assign them a value.</p>
-
-    <div class="example well">
-        <section class="table ex-table">
-            <section class="table-body">
-                <div class="display-row">
-                    <div class="cell description">
-                        50
-                        Sit Ups
-                        <button 
-                            class="edit-exercise link">
-                            <i class="icon-pencil"></i>
-                        </button>
-                    </div>
-                    <div class="cell value">
-                        <form class="deposit-form" />
-                            <button class="deposit ready">
-                                20
-                                <i class="ready icon-flash-1"></i>
-                                <i class="waiting icon-spinner2 animate-spin"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div class="display-row">
-                    <div class="cell description">
-                        25
-                        Push Ups
-                        <button 
-                            class="edit-exercise link">
-                            <i class="icon-pencil"></i>
-                        </button>
-                    </div>
-                    <div class="cell value">
-                        <form class="deposit-form" />
-                            <button class="deposit ready">
-                                25
-                                <i class="ready icon-flash-1"></i>
-                                <i class="waiting icon-spinner2 animate-spin"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </section>
-    </div>
     <p>You start with a balance of 0 points. Every night, we deduct 100.</p>
     <p>Do one of your exercises and log it to earn points against your balance.</p>
     <p>If you keep a positive balance, you're on a streak. Fall below 0 and you break it.</p>

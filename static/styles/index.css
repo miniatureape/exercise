@@ -1,0 +1,67 @@
+h2 {
+    font-size: 1.5rem;
+}
+
+
+.well {
+    background: #efefef;
+    border-radius: 3px;
+}
+
+.example {
+    text-align: left;
+}
+
+.title {
+    font-size: 2rem;
+    padding: 15px;
+    margin: 0;
+}
+
+.sub-title {
+    font-size: 1.3rem;
+    margin-top: 0;
+    padding: 15px;
+    border-bottom: 2px solid #3498db;
+    border-top: 2px solid #3498db;
+}
+
+#intro {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.link {
+    background: transparent;
+    padding: 0;
+    font-weight: normal;
+}
+
+.sign-up-section {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.sign-up {
+    padding: 15px;
+    text-align: center;
+}
+
+.sign-up input, .sign-up button {
+    font-size: 1.5rem
+    line-height: 2rem;
+    padding: 12px;
+}
+
+.sign-up button {
+    color: #ecf0f1;
+    background: #3498db;
+}
+
+@media (max-width: 768px) {
+
+    #intro, .sign-up-section {
+        padding: 0 10px;
+        text-align: left;
+    }
+}
