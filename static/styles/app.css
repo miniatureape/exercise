@@ -278,13 +278,14 @@ button.danger {
     0%   { -webkit-transform: translateX(-100%); }
     25%  { -webkit-transform: translateX(-78%); }
     75%  { -webkit-transform: translateX(-14%); }
-    100% { -webkit-transform: translateX(0%); }
+    100% { -webkit-transform: translateX(-5%); }
 }
 
 @-webkit-keyframes loading-done {
     0%   { -webkit-transform: translateX(0%); }
     100%  { -webkit-transform: translateX(0%); }
 }
+
 
 .loading-bar.loading-one {
     -webkit-animation: loading-one 4s;
@@ -294,53 +295,36 @@ button.danger {
     -webkit-animation: loading-done .2s;
 }
 
-/*
-.stats {
-    overflow: hidden;
-    background: #2c3e50;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    line-height: 50px;
-    border-bottom: 1px solid #3498db;
-    padding: 0 10px;
+@-webkit-keyframes balance-update {
+    0%   { -webkit-transform: scale(1); }
+    20%  { -webkit-transform: scale(1.2); }
+    40%  { -webkit-transform: scale(1); }
+    60%  { -webkit-transform: scale(1.2); }
+    100% { -webkit-transform: scale(1); }
 }
 
-.stats .icon-chart-bar {
-    display: block;
-    float: left;
+.balance.update {
+    -webkit-animation: balance-update .5s;
+    -webkit-animation-fill-mode: forwards;  
 }
 
-.stats ul {
-    float: left;
-    padding: 0;
-    margin: 0;
-    list-style-type: none;
-}
 
-.stats li {
-    float: left;
-    margin-left: 15px;
-    padding-right: 20px;
-    border-right: 1px solid #34495e;
-}
 
-.stats li:last-child {
-    border: none;
-}
 
-.positive {
-    color: #27ae60;
-}
 
-.negative {
-    color: #f1c40f;
-}
 
-.stats .small {
-    font-size: 1.2rem;
-}
-*/
+
+
+
+
+
+
+
+
+
+
+
+
 
 .table .delete-exercise-form {
     display: inline;

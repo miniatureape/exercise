@@ -1,24 +1,67 @@
 (function() {
 
+    // window.FastClick.attach(document.body);
+
     var B = Backbone;
     var M = B.Marionette;
 
-    window.user = new B.Model(Context);
-    window.exercises = new B.Collection(Context.exercises);
+    var User = B.Model.extend({
+
+        idAttribute: '_id',
+
+        log: function(amount) {
+            return $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/user/' + this.getId() + '/deposit',
+                data: {
+                    amount: amount
+                }
+            });
+        },
+
+        getId: function() {
+            return this.get('_id')['$oid'];
+        }
+
+    })
 
     var Exercise = B.Model.extend({
+
         idAttribute: 'eid',
+
         defaults: {
             eid: null,
             quantity: null,
             name: null,
             value: null
+        },
+
+        log: function(user) {
+            user.log(this.get('eid'));
+        },
+
+        delete: function() {
+            return $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/user/' + user.getId() + '/exercise/' + this.get('eid') + '/delete',
+            });
         }
+
+    });
+
+    var Exercises = B.Collection.extend({
+        model: Exercise
     });
 
     var Header = M.ItemView.extend({
 
         template: '#tpl-header',
+
+        initialize: function() {
+            this.listenTo(this.model, 'change:balance', this.updateBalance);
+        },
 
         ui: {
             loadingBar: '.loading-bar'
@@ -34,25 +77,44 @@
             this.ui.loadingBar
                 .removeClass('loading-one')
                 .addClass('loading-done');
-        }
+        },
+
+        updateBalance: function() {
+            this.render();
+            this.$el.find('.balance').addClass('update');
+        },
     });
 
     var ExerciseView = M.ItemView.extend({
         events: {
-            'click .description': 'onClickEdit'
+            'click .description': 'onClickEdit',
+            'click .deposit': 'onClickDeposit'
         },
+
         tagName: 'div',
+
         className: 'exercise',
+
         template: '#tpl-exercise',
 
         onClickEdit: function() {
             App.commands.execute('show-modal', new CreateExerciseView({model: this.model}));
+        },
+
+        onClickDeposit: function() {
+            var req = user.log(this.model.get('value'));
+            req.done(function(response) {
+                user.set(response);
+            });
         }
 
     });
 
     var ExerciseList = M.CollectionView.extend({
-        itemView: ExerciseView
+        itemView: ExerciseView,
+        initialize: function() {
+            this.listenTo(this.collection, 'change', this.render);
+        }
     });
 
     var Body = M.ItemView;
@@ -98,7 +160,23 @@
 
     });
     var CreateExerciseView = M.ItemView.extend({
-        template: '#tpl-create-exercise-form'
+
+        events: {
+            'click [data-delete-exercise]': 'onDeleteExercise',
+        },
+
+        template: '#tpl-create-exercise-form',
+
+        onDeleteExercise: function(e) {
+            e.preventDefault();
+            var req = this.model.delete();
+            req.done(function(response) {
+                exercises.set(response);
+                App.vent.trigger('close-modal');
+            });
+        }
+
+
     });
 
     var ExercisePanel = M.Layout.extend({
@@ -329,12 +407,6 @@
 
     });
 
-    window.header = new Header({model: user});
-    var body = new Body({el: $('#body')});
-    var panelLayout = new PanelLayout({el: '.panels'});
-    var mainNav = new MainNav({el: $('.main-nav')});
-    var modal = new ModalLayout({el: $('#modal')});
-
     var Controller = M.Controller.extend({
 
         showPanel: function(panel) {
@@ -358,6 +430,13 @@
     });
 
     window.App = new M.Application;
+    window.user = new User(Context);
+    window.exercises = new Exercises(Context.exercises);
+    var header = new Header({model: user});
+    var body = new Body({el: $('#body')});
+    var panelLayout = new PanelLayout({el: '.panels'});
+    var mainNav = new MainNav({el: $('.main-nav')});
+    var modal = new ModalLayout({el: $('#modal')});
 
     App.addRegions({
         Frame: '#frame',
@@ -385,6 +464,10 @@
         App.Panels.attachView(panelLayout);
         App.MainNav.attachView(mainNav);
         App.Modal.attachView(modal);
+
+        $(document).ajaxStart(_.bind(header.startLoading, header));
+        $(document).ajaxComplete(_.bind(header.finishLoading, header));
+        $(document).ajaxError(_.bind(header.finishLoading, header));
 
     });
 

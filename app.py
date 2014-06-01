@@ -50,7 +50,7 @@ def del_exercise(user_id, eid):
     if user:
         Users.del_exercise(user, eid)
 
-    return redirect('/user/%s/exercises' % user_id)
+    return jsonifym(user)
 
 @app.route("/user/<user_id>/delete", methods=['GET', 'POST'])
 def del_user(user_id):

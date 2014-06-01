@@ -66,7 +66,7 @@
         <input class="basic" type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
         <button class="action <% if (eid) { %>pull-right <% } else { %>wide<% } %>">Create</button>
         <% if (eid) { %>
-            <button class="danger pull-left">Delete</button>
+            <button data-delete-exercise class="danger pull-left">Delete</button>
         <% } %>
     </form>
 </script>
