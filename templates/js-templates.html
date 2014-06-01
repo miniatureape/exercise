@@ -64,7 +64,7 @@
         <input class="basic" type="text" name ="name" placeholder="e.g. Pull ups" value="<%= name %>" />
         <label>Value</label>
         <input class="basic" type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
-        <button class="action <% if (eid) { %>pull-right <% } else { %>wide<% } %>">Create</button>
+        <button data-save-exercise class="action <% if (eid) { %>pull-right <% } else { %>wide<% } %>">Create</button>
         <% if (eid) { %>
             <button data-delete-exercise class="danger pull-left">Delete</button>
         <% } %>

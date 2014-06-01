@@ -90,7 +90,7 @@ def edit_exercise(user_id):
         print errors
         flash_list(errors, 'error')
 
-    return redirect('/user/%s/exercises' % user_id)
+    return jsonifym(user)
 
 @app.route("/user/<user_id>/exercises", methods=['GET'])
 def exercises(user_id):

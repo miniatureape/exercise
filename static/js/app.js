@@ -47,6 +47,16 @@
                 dataType: 'json',
                 url: '/user/' + user.getId() + '/exercise/' + this.get('eid') + '/delete',
             });
+        },
+
+        save: function(data) {
+            this.set(data);
+            return $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/user/' + user.getId() + '/exercises/edit',
+                data: this.toJSON()
+            });
         }
 
     });
@@ -161,8 +171,15 @@
     });
     var CreateExerciseView = M.ItemView.extend({
 
+        ui: {
+            quantity: '.quantity',
+            name: '.name',
+            value: '.value'
+        },
+
         events: {
             'click [data-delete-exercise]': 'onDeleteExercise',
+            'click [data-save-exercise]': 'onSaveExercise',
         },
 
         template: '#tpl-create-exercise-form',
@@ -171,11 +188,27 @@
             e.preventDefault();
             var req = this.model.delete();
             req.done(function(response) {
-                exercises.set(response);
-                App.vent.trigger('close-modal');
+                exercises.set(response.exercises);
+                App.commands.execute('close-modal');
+            });
+        },
+
+        onSaveExercise: function(e) {
+            e.preventDefault();
+
+            var data = {
+                quantity: this.ui.quantity.val(),
+                name: this.ui.name.val(),
+                value: this.ui.value.val(),
+            };
+
+            var req = this.model.save(data);
+            req.done(function(response) {
+                user.set(response);
+                exercises.set(response.exercises);
+                App.commands.execute('close-modal');
             });
         }
-
 
     });
 
