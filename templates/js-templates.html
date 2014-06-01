@@ -1,0 +1,107 @@
+<script type="text/html" id="tpl-header">
+    <div class="inner-header">
+        <div class="logo">
+            <span class='e'>E</span>
+            <span class="bar"></span>
+        </div>
+        <span class="balance"><%= balance %></span>
+    </div>
+    <div class="loading-bar"></div>
+</script>
+
+<script type="text/html" id="tpl-exercise">
+    <div class="description">
+        <span class="quantity"><%= quantity %></span>
+        <span class="name"><%= name %></span>
+    </div>
+    <div class="deposit">
+        <span class="icon"><i class="icon-ok"></i></span>
+        <span class="value"><%= value %></span>
+    </div>
+</script>
+
+<script type="text/html" id="tpl-exercise-panel">
+    <div class="exercises"></div>
+    <footer>
+            <button data-trigger="quick-log" class="action">
+                <i class="icon-flash-1"></i>
+            </button>
+            <button data-trigger="create-exercise" class="action">
+                <i class="icon-plus-1"></i>
+            </button>
+    </footer>
+</script>
+
+<script type="text/html" id="tpl-stats-panel">
+    <div class="stats-section">
+        <h2>Habit</h2>
+        <div class="stats-item">
+            <label class="inline">Current Streak</label><span class="stats-value"><%= streak %> days</span>
+        </div>
+        <div class="stats-item">
+            <label class="inline">Longest Streak</label><span class="stats-value"><%= longest_streak %> days</span>
+        </div>
+    </div>
+    <p style="text-align: center">More Coming Soon</p>
+</script>
+
+<script type="text/html" id="tpl-quick-log-form">
+    <form class="quick-log-form">
+        <h1 class="modal-title">Quick Log</h1>
+        <p>Log some exercise you don't normally do without making a new exercise.</p>
+        <label>Value</label>
+        <input class="basic" name="value" type="tel" placeholder="e.g. 20" />
+        <button class="action wide">Log</button>
+    </form>
+</script>
+
+<script type="text/html" id="tpl-create-exercise-form">
+    <form class="create-exercise-form">
+        <h1 class="modal-title"><% if (eid) { %>Edit Exercise <% } else { %>Create Exercise<% } %></h1>
+        <label>Quantity</label>
+        <input class="basic" type="tel" name="quantity" placeholder="e.g. 25" value="<%= quantity %>" />
+        <label>Description</label>
+        <input class="basic" type="text" name ="name" placeholder="e.g. Pull ups" value="<%= name %>" />
+        <label>Value</label>
+        <input class="basic" type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
+        <button class="action <% if (eid) { %>pull-right <% } else { %>wide<% } %>">Create</button>
+        <% if (eid) { %>
+            <button class="danger pull-left">Delete</button>
+        <% } %>
+    </form>
+</script>
+
+<script type="text/html" id="edit-overlay-header-tpl">
+    Edit <%= name %>
+    <span class="ss-icon icon-cancel cancel"></span>
+</script>
+
+<script type="text/html" id="create-overlay-header-tpl">
+    Add Exercise
+    <span class="ss-icon icon-cancel cancel"></span>
+</script>
+
+<script type="text/html" id="overlay-content-tpl">
+    <form class="edit-form" action="/user/{{user._id}}/exercises/edit" method="post">
+        <% if (eid) { %>
+            <input type="hidden" name="eid" value="<%= eid %>" />
+        <% } %>
+        <label>Quantity</label>
+        <input type="tel" name="quantity" placeholder="e.g. 25" value="<%= quantity %>" />
+        <label>Description</label>
+        <input type="text" name ="name" placeholder="e.g. Pull ups" value="<%= name %>" />
+        <label>Value</label>
+        <input type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
+    </form>
+</script>
+
+<script type="text/html" id="edit-overlay-footer-tpl">
+    <button class="save">Save</button>
+    <form method="post" action="/user/{{user._id}}/exercise/<%= eid %>/delete">
+        <button class="delete">Delete</button>
+    </form>
+</script>
+
+<script type="text/html" id="create-overlay-footer-tpl">
+    <button class="save wide">Save</button>
+</script>

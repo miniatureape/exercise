@@ -7,103 +7,44 @@
 {% block page_name %}app{% endblock %}
 
 {% block page_scripts %}
+<script src="/static/js/lib/backbone.js"></script>
+<script src="/static/js/lib/backbone.marionette.js"></script>
 <script src="/static/js/app.js"></script>
 {% endblock %}
 
 {% block inner_content %}
 
-    <header>
-        <div class="logo">
-            <span class='e'>E</span>
-            <span class="bar"></span>
+    <div id="frame">
+
+        <header></header>
+
+        <div class="body-wrapper">
+            <div id="body">
+                <nav class="main-nav">
+                    <a class="tab active" data-panel-trigger="exercise-panel">Exercises</a>
+                    <a class="tab" data-panel-trigger="stats-panel">Stats</a>
+                    <div class="active-indicator"></div>
+                </nav>
+                <div class="panels">
+                    <div class="panel-wrapper">
+                        <div class="panel exercise-panel"></div>
+                        <div class="panel stats-panel"></div>
+                    </div>
+                </div>
+            </div>
+             <div id="modal">
+                 <div class="close"><i class="icon-left-open"></i></div>
+                 <div class="modal-body"></div>
+             </div>
         </div>
-        <span class="balance">{{ user.balance }}</span>
-    </header>
-
-    <div id="body">
-        <nav class="main-nav">
-            <a class="tab active">Exercises</a>
-            <a class="tab">Stats</a>
-            <div class="active-indicator"></div>
-        </nav>
-        <ul class="panels">
-            <li class="panel exercise-panel">
-                <ol class="exercises">
-                    {% for exercise in user.exercises %}
-                    <li class="exercise">
-                        <div class="description">
-                            <span class="quantity">{{ exercise.quantity }}</span>
-                            <span class="name">{{ exercise.name }}</span>
-                            <span class="edit-btn"><i class="icon-pencil"></i></span>
-                        </div>
-                        <div class="deposit">
-                            <span class="icon"><i class="icon-ok"></i></span>
-                            <span class="value">{{ exercise.value }}</span>
-                        </div>
-                        <!--
-                            <button 
-                                class="edit-exercise link"
-                                data-quantity="{{ exercise.quantity }}"
-                                data-eid="{{ exercise.eid }}"
-                                data-name="{{ exercise.name }}"
-                                data-value="{{ exercise.value }}"
-                                >
-                                <i class="icon-pencil"></i>
-                            </button>
-                            <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit/{{exercise.value}}">
-                                <button class="deposit ready">
-                                    <i class="ready icon-flash-1"></i>
-                                    {{ exercise.value }}
-                                    <i class="waiting icon-spinner2 animate-spin"></i>
-                                </button>
-                            </form>
-                        -->
-                    </li>
-                    {% endfor %}
-                </ol>
-                <footer>
-                    <div class='btn-cell'>
-                        <button class="primary-btn quick-log wide">
-                            <i class="ready icon-flash-1"></i> Quick Log
-                        </button>
-                    </div>
-                    <div class='btn-cell'>
-                        <button class="primary-btn add-btn wide">New Exercise</button>
-                    </div>
-                </footer>
-            </li>
-            <li class="panel stats-panel">
-            </li>
-        </ul>
-    </div>
-
-    {% if user.exercises %}
 
 
-    <!--
-    <div class="stats">
-        <i class="icon-chart-bar {% if user.balance > 0 %}positive{% else %}negative{% endif %}"></i>
-        <ul>
-            <li class="section balance"><span class="balance-amount">{{ user.balance }}</span> <span class="small">pts</span></li>
-            <li class="section streak-length">{{ user.streak }} <span class="small">Day{% if user.streak != 1 %}s{% endif %} Streak</span></li>
-            <li class="section streak-longest">{{ user.longest_streak }} <span class="small">Day{% if user.streak != 1 %}s{% endif %} Record</span></li>
-        </ul>
-    </div>
-    -->
 
-    {% endif %}
+     </div>
 
     {% include "errors.html" %}
 
-
-    <div id="overlay" class="exercise-overlay mask cancel">
-        <div class="overlay">
-            <header></header>
-            <section></section>
-            <footer></footer>
-        </div>
-    </div>
-
+    <!-- 
     <div id="ql-overlay" class="mask cancel">
         <div class="overlay">
             <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit">
@@ -122,41 +63,13 @@
             </form>
         </div>
     </div>
+    -->
 
-    <script type="text/html" id="edit-overlay-header-tpl">
-        Edit <%= name %>
-        <span class="ss-icon icon-cancel cancel"></span>
+    <script id="context">
+        window.Context = {{ app_context|safe }};
     </script>
 
-    <script type="text/html" id="create-overlay-header-tpl">
-        Add Exercise
-        <span class="ss-icon icon-cancel cancel"></span>
-    </script>
-
-    <script type="text/html" id="overlay-content-tpl">
-        <form class="edit-form" action="/user/{{user._id}}/exercises/edit" method="post">
-            <% if (eid) { %>
-                <input type="hidden" name="eid" value="<%= eid %>" />
-            <% } %>
-            <label>Quantity</label>
-            <input type="tel" name="quantity" placeholder="e.g. 25" value="<%= quantity %>" />
-            <label>Description</label>
-            <input type="text" name ="name" placeholder="e.g. Pull ups" value="<%= name %>" />
-            <label>Value</label>
-            <input type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
-        </form>
-    </script>
-
-    <script type="text/html" id="edit-overlay-footer-tpl">
-        <button class="save">Save</button>
-        <form method="post" action="/user/{{user._id}}/exercise/<%= eid %>/delete">
-            <button class="delete">Delete</button>
-        </form>
-    </script>
-
-    <script type="text/html" id="create-overlay-footer-tpl">
-        <button class="save wide">Save</button>
-    </script>
+    {% include 'js-templates.html' %}
 
 {% endblock %}
 
