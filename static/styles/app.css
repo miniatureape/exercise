@@ -99,6 +99,7 @@ header {
     max-width: 600px;
     height: 60px;
     z-index: 100;
+    overflow: hidden;
 }
 
 .inner-header {
@@ -213,8 +214,12 @@ ol, ul {
 
 .exercise-panel {
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
+.exercise-panel::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
 .exercise-panel footer {
     padding: 10px;
 }
