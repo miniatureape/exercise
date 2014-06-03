@@ -212,7 +212,7 @@ ol, ul {
 }
 
 .exercise-panel {
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .exercise-panel footer {
