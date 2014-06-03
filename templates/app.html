@@ -39,32 +39,9 @@
              </div>
         </div>
 
-
-
      </div>
 
     {% include "errors.html" %}
-
-    <!-- 
-    <div id="ql-overlay" class="mask cancel">
-        <div class="overlay">
-            <form class="deposit-form" method="post" action="/user/{{user._id}}/deposit">
-            <header>Quick Log
-                <span class="ss-icon icon-cancel cancel"></span>
-            </header>
-            <section>
-                <p>Quickly log some exercise you don't normally do.</p>
-                <input type="hidden" name="name" value="__QL__" /> 
-                <label>Value</label>
-                <input type="tel" name="amount" placeholder="e.g. 20" /> 
-            </section>
-            <footer>
-                <button class="primary-btn wide">Log</button>
-            </footer>
-            </form>
-        </div>
-    </div>
-    -->
 
     <script id="context">
         window.Context = {{ app_context|safe }};

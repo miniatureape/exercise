@@ -17,7 +17,6 @@
     bottom: 0;
 }
 
-
 #modal {
     position: absolute;
     top: 0;
@@ -295,7 +294,7 @@ button.danger {
     -webkit-animation: loading-done .2s;
 }
 
-@-webkit-keyframes balance-update {
+@-webkit-keyframes balance-update-pop {
     0%   { -webkit-transform: scale(1); }
     20%  { -webkit-transform: scale(1.2); }
     40%  { -webkit-transform: scale(1); }
@@ -303,9 +302,19 @@ button.danger {
     100% { -webkit-transform: scale(1); }
 }
 
+@-webkit-keyframes balance-update-wave {
+    50%  { -webkit-transform: translateY(-5px); }
+    60%  { -webkit-transform: translateY(-5px) rotate(7deg); }
+    70%  { -webkit-transform: translateY(-5px) rotate(-7deg); }
+    80%  { -webkit-transform: translateY(-5px) rotate(7deg); }
+    90%  { -webkit-transform: translateY(-5px) rotate(-7deg); }
+    100%  { -webkit-transform: translateY(0) rotate(0); }
+}
+
 .balance.update {
-    -webkit-animation: balance-update .5s;
+    -webkit-animation: balance-update-wave .7s;
     -webkit-animation-fill-mode: forwards;  
+    -webkit-transform-origin: 50% 100%;
 }
 
 

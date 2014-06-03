@@ -1,6 +1,6 @@
 (function() {
 
-    // window.FastClick.attach(document.body);
+    FastClick.attach(document.body);
 
     var B = Backbone;
     var M = B.Marionette;
@@ -166,15 +166,43 @@
     });
 
     var QuickLogView = M.ItemView.extend({
-        template: '#tpl-quick-log-form'
+        template: '#tpl-quick-log-form',
 
+        events: {
+            'click [data-quick-log]': 'onQuickLog'
+        },
+
+        ui: {
+            value: '[name="value"]'
+        },
+
+        onQuickLog: function(e) {
+            e.preventDefault();
+
+            var data = {
+                amount: this.ui.value.val()
+            }
+
+            var req = $.ajax({
+                url: '/user/' + user.getId() + '/deposit',
+                type: 'post',
+                dataType: 'json',
+                data: data
+            });
+
+            req.done(function(response) {
+                user.set({balance: response.balance});
+                App.commands.execute('close-modal');
+            });
+
+        },
     });
     var CreateExerciseView = M.ItemView.extend({
 
         ui: {
-            quantity: '.quantity',
-            name: '.name',
-            value: '.value'
+            quantity: '[name="quantity"]',
+            name: '[name="name"]',
+            value: '[name="value"]'
         },
 
         events: {
