@@ -6,7 +6,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 #frame {
@@ -97,6 +98,7 @@ header {
     width: 100%;
     max-width: 600px;
     height: 60px;
+    z-index: 100;
 }
 
 .inner-header {
