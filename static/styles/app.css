@@ -6,8 +6,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
 }
 
 #frame {
@@ -195,7 +194,8 @@ ol, ul {
     float: left;
 }
 
-.exercises {}
+.exercises {
+}
 
 .exercises .exercise {
     overflow: hidden;
@@ -211,9 +211,12 @@ ol, ul {
     float: right;
 }
 
+.exercise-panel {
+    overflow-y: scroll;
+}
+
 .exercise-panel footer {
     padding: 10px;
-    text-align: center;
 }
 
 button {

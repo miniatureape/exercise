@@ -263,6 +263,11 @@
 
         onShow: function() {
             this.Exercises.show(new ExerciseList({collection: exercises}));
+        },
+
+        onRender: function() {
+            // TODO can this be done in CSS?
+            this.$el.css({height: document.documentElement.clientHeight - 102});
         }
 
     });
