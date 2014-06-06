@@ -344,6 +344,13 @@
                 return;
             }
 
+            if (Math.abs(totalDiff.y) > Math.abs(totalDiff.x)) {
+                return;
+            }
+
+            e.preventDefault();
+
+
             var diff = this.sub(touchOffset, this.lastCoords);
 
             if (diff.x < 0) {
