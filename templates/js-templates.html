@@ -1,9 +1,11 @@
 <script type="text/html" id="tpl-header">
     <div class="inner-header">
+        <a href="">
         <div class="logo">
             <span class='e'>E</span>
             <span class="bar"></span>
         </div>
+        </a>
         <span class="balance"><%= balance %></span>
     </div>
     <div class="loading-bar"></div>
@@ -69,39 +71,4 @@
             <button data-delete-exercise class="danger pull-left">Delete</button>
         <% } %>
     </form>
-</script>
-
-<script type="text/html" id="edit-overlay-header-tpl">
-    Edit <%= name %>
-    <span class="ss-icon icon-cancel cancel"></span>
-</script>
-
-<script type="text/html" id="create-overlay-header-tpl">
-    Add Exercise
-    <span class="ss-icon icon-cancel cancel"></span>
-</script>
-
-<script type="text/html" id="overlay-content-tpl">
-    <form class="edit-form" action="/user/{{user._id}}/exercises/edit" method="post">
-        <% if (eid) { %>
-            <input type="hidden" name="eid" value="<%= eid %>" />
-        <% } %>
-        <label>Quantity</label>
-        <input type="tel" name="quantity" placeholder="e.g. 25" value="<%= quantity %>" />
-        <label>Description</label>
-        <input type="text" name ="name" placeholder="e.g. Pull ups" value="<%= name %>" />
-        <label>Value</label>
-        <input type="tel" name="value" placeholder="e.g. 20" value="<%= value %>" />
-    </form>
-</script>
-
-<script type="text/html" id="edit-overlay-footer-tpl">
-    <button class="save">Save</button>
-    <form method="post" action="/user/{{user._id}}/exercise/<%= eid %>/delete">
-        <button class="delete">Delete</button>
-    </form>
-</script>
-
-<script type="text/html" id="create-overlay-footer-tpl">
-    <button class="save wide">Save</button>
 </script>
