@@ -206,6 +206,7 @@ ol, ul {
 .exercise .description {
     padding: 14px 10px;
     float: left;
+    cursor: pointer;
 }
 
 .exercise .quantity {
@@ -218,6 +219,7 @@ ol, ul {
     float: right;
     border-left: 1px solid #ecf0f1;
     min-width: 70px;
+    cursor: pointer;
 }
 
 .exercise-panel {
@@ -237,6 +239,7 @@ button {
     border: 1px solid;
     background-color: transparent;
     padding: 10px;
+    cursor: pointer;
 }
 
 button.action {
