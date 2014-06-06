@@ -200,16 +200,24 @@ ol, ul {
 
 .exercises .exercise {
     overflow: hidden;
-    padding: 14px 10px;
     border-bottom: 1px solid #ecf0f1;
 }
 
 .exercise .description {
+    padding: 14px 10px;
     float: left;
 }
 
+.exercise .quantity {
+    display: inline-block;
+    width: 30px;
+}
+
 .exercise .deposit {
+    padding: 14px 10px;
     float: right;
+    border-left: 1px solid #ecf0f1;
+    min-width: 70px;
 }
 
 .exercise-panel {
