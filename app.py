@@ -30,12 +30,22 @@ def jsonifym(d):
 def deposit(user_id, amount):
 
     user = Users.find_by_id(user_id)
+    eid = request.form.get('eid', None)
+    exercise = None
 
     if not amount:
         amount = int(request.form.get('amount'))
 
+    if user and eid:
+        exercise = Users.find_exercise(user, eid)
+
     if user:
-        Users.deposit(user, amount, request.form.get('date'))
+        Users.deposit(user, amount, exercise, request.form.get('date'))
+    else:
+        if request.is_xhr:
+            return jsonifym({error: 'Could not find user'})
+        else:
+            return redirect('/user/%s/exercises' % user_id)
 
     if request.is_xhr:
        return jsonifym(user)

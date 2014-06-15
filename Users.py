@@ -42,7 +42,8 @@ def create_doc(email, id=None):
         "longest_streak": 0,
         "last": None,
         "last_mail": None,
-        "last_deducted": None
+        "last_deducted": None,
+        "activity": [],
     }
 
     return user_doc
@@ -58,6 +59,12 @@ def find_one(query):
 
 def find_by_id(user_id):
     return db.users.find_one({'_id': pymongo.ObjectId(user_id)})
+
+def find_exercise(user, eid):
+    for e in user.get('exercises', []):
+        if e.get('eid') == eid:
+            return e
+    return false
 
 def update_exercise(user, data, eid):
     for e in user.get('exercises', []):
@@ -102,9 +109,22 @@ def del_exercise(user, eid):
 def date_str_to_list(datestr):
     return [int(d) for d in datestr.split('/')]
 
-def deposit(user, value, date):
+def set_activity(user, value, exercise, date):
+    activity = user.get('activity', [])
+    if not exercise:
+        exercise = {"value": value}
+    exercise['date'] = date;
+    activity.append(exercise)
+    activity = activity[-20:]
+    user['activity'] = activity
+
+    return user
+
+def deposit(user, value, exercise, date):
     user['balance'] = user.get('balance') + value
     user['last'] = date
+
+    user = set_activity(user, value, exercise, date)
 
     return store(user)
 

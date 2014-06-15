@@ -9,13 +9,15 @@
 
         idAttribute: '_id',
 
-        log: function(amount) {
+        log: function(amount, eid) {
             return $.ajax({
                 type: 'post',
                 dataType: 'json',
                 url: '/user/' + this.getId() + '/deposit',
                 data: {
-                    amount: amount
+                    amount: amount,
+                    eid: eid,
+                    date: (new Date).getTime(),
                 }
             });
         },
@@ -38,7 +40,7 @@
         },
 
         log: function(user) {
-            user.log(this.get('eid'));
+            user.log(this.get('value'), this.get('eid'));
         },
 
         delete: function() {
@@ -112,7 +114,9 @@
         },
 
         onClickDeposit: function() {
-            var req = user.log(this.model.get('value'));
+            var val = this.model.get('value');
+            var eid = this.model.get('eid');
+            var req = user.log(val, eid);
             req.done(function(response) {
                 user.set(response);
             });
@@ -161,8 +165,59 @@
 
     });
 
+    window.calcDaysAgo = function(d1, d2) {
+        var diff = d2.getTime() - d1.getTime();
+        return Math.floor(diff / 86400000);
+    };
+
     var StatsPanel = M.Layout.extend({
         template: '#tpl-stats-panel',
+
+        initialize: function() {
+            this.listenTo(this.model, 'change:activity', this.render);
+        },
+
+        formatDate: function(d) {
+
+            if (!d) return '';
+
+            d = new Date(parseInt(d));
+
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            var today = new Date;
+            var daysAgo = calcDaysAgo(d, today);
+            var parts; 
+
+            if (daysAgo == 0) {
+                return ' at ' + [d.getHours(), d.getMinutes()].join(':');
+            } else if (daysAgo <= 7) {
+                return ' on ' + days[d.getDay()] + ' at ' +  [d.getHours(), d.getMinutes()].join(':');
+            } 
+            return ' on ' +  [d.getMonth() + 1, d.getDate()].join('/');
+        },
+
+        presentActivity: function(activity) {
+            var stories = [];
+            _.each(activity, function(a) {
+                var date = (new Date(a.date))
+                if (a.eid) {
+                    stories.push(a.name + ' (<span class="activity-value">' + a.value + 'pts</span>)' + this.formatDate(a.date));
+                } else {
+                    stories.push("Quick logged " + a.value + this.formatDate(a.date));
+                }
+            }, this);
+            return stories;
+        },
+
+        serializeData: function() {
+            var data = this.model.toJSON();
+            data['activity_stories'] = this.presentActivity(data.activity);
+            return data
+        },
+
+        onRender: function() {
+            this.$el.css({height: document.documentElement.clientHeight - 102});
+        }
     });
 
     var QuickLogView = M.ItemView.extend({

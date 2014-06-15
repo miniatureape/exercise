@@ -44,6 +44,12 @@
             <label class="inline">Longest Streak</label><span class="stats-value"><%= longest_streak %> days</span>
         </div>
     </div>
+    <div class="stats-section">
+        <h2>Recent Activity</h2>
+        <% _.each(activity_stories, function(story) { %>
+                <div class="stats-item"><%= story %></div>
+        <% }) %>
+    </div>
     <p style="text-align: center">More Coming Soon</p>
 </script>
 

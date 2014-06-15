@@ -197,6 +197,8 @@ ol, ul {
 .panel {
     display: block;
     float: left;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .exercises {
@@ -227,8 +229,6 @@ ol, ul {
 }
 
 .exercise-panel {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
 }
 
 .exercise-panel::-webkit-scrollbar {
