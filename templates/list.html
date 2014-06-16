@@ -1,0 +1,5 @@
+<ul>
+    {% for user in users %}
+    <li><a href="/user/{{ user._id }}/__details">{{ user._id }}</a>: {{ user.email }}</li>
+    {% endfor %}
+</ul>

@@ -112,6 +112,27 @@ def exercises(user_id):
 
     return render_template('app.html', user=user, app_context=jsonifym(user))
 
+@app.route("/user/<user_id>/__details", methods=['GET'])
+def details(user_id):
+
+    user = Users.find_by_id(user_id)
+
+    if not user:
+        return redirect('/')
+
+    return render_template('details.html', user=user, app_context=jsonifym(user))
+
+@app.route("/user/__list", methods=['GET'])
+def list():
+
+    users = Users.find()
+
+    if not users:
+        return redirect('/')
+
+    return render_template('list.html', users=users)
+
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
 

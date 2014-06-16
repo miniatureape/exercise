@@ -3,18 +3,6 @@ import random
 import datetime
 from flask.ext import pymongo
 
-"""
-
-exercises: [{
-    "eid": 123,
-    "name": "abc",
-    "value": "abc",
-    "quantity": 5,
-}]
-
-
-"""
-
 db = None
 app = None
 
@@ -51,7 +39,7 @@ def create_doc(email, id=None):
 def create(email):
     return db.users.insert(create_doc(email))
 
-def find(query):
+def find(query=None):
     return db.users.find(query)
 
 def find_one(query):
@@ -120,9 +108,19 @@ def set_activity(user, value, exercise, date):
 
     return user
 
+def update_exercise_count(user, exercise):
+    exercises = []
+    for ex in user['exercises']:
+        if exercise['eid'] == ex['eid']:
+            ex['count'] = ex.get('count', 0) + 1
+        exercises.append(ex)
+
+    return exercises
+
 def deposit(user, value, exercise, date):
     user['balance'] = user.get('balance') + value
     user['last'] = date
+    user['exercises'] = update_exercise_count(user, exercise)
 
     user = set_activity(user, value, exercise, date)
 

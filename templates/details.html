@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block inner_content %}
+    <h1>{{ user.email }}</h1>
+    <h1><a href="/user/{{ user._id }}/exercises">{{ user._id }}</a></h1>
+    <ul>
+        <li>Current Streak: {{ user.streak }}</li>
+        <li>Longest Streak: {{ user.longest_streak }}</li>
+    </ul>
+    <table>
+        <thead>
+            <tr>
+                <td>Quantity</td>
+                <td>Name</td>
+                <td>Value</td>
+                <td>Count</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% for exercise in user.exercises %}
+        <tr>
+            <td>{{exercise.quantity}}</td>
+            <td>{{exercise.name}}</td>
+            <td>{{exercise.value}}</td>
+            <td>{{exercise.count}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
