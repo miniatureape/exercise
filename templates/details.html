@@ -4,9 +4,14 @@
     <h1>{{ user.email }}</h1>
     <h1><a href="/user/{{ user._id }}/exercises">{{ user._id }}</a></h1>
     <ul>
+        <li>Created: {{ user.created }}</li>
+        <li>Balance: {{ user.balance }}</li>
         <li>Current Streak: {{ user.streak }}</li>
         <li>Longest Streak: {{ user.longest_streak }}</li>
+        <li>Last Mail: {{ user.last_mail }}</li>
+        <li>Last Deducted: {{ user.last_deducted }}</li>
     </ul>
+    <h3>Exercises</h3>
     <table>
         <thead>
             <tr>
@@ -27,5 +32,11 @@
         {% endfor %}
         </tbody>
     </table>
+    <h3>Recent Activity</h3>
+    <ul>
+        {% for activity in user.activity %}
+        <li>{{ activity.date}} - {{ activity.value }}</li>
+        {% endfor %}
+    </ul>
 {% endblock %}
 
