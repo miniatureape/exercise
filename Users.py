@@ -52,7 +52,7 @@ def find_exercise(user, eid):
     for e in user.get('exercises', []):
         if e.get('eid') == eid:
             return e
-    return false
+    return None
 
 def update_exercise(user, data, eid):
     for e in user.get('exercises', []):
@@ -120,7 +120,8 @@ def update_exercise_count(user, exercise):
 def deposit(user, value, exercise, date):
     user['balance'] = user.get('balance') + value
     user['last'] = date
-    user['exercises'] = update_exercise_count(user, exercise)
+    if exercise:
+        user['exercises'] = update_exercise_count(user, exercise)
 
     user = set_activity(user, value, exercise, date)
 
