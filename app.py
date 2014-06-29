@@ -149,7 +149,7 @@ def index():
 
         if not user:
             user_id = Users.create(email)
-            sg = sendgrid.SendGridClient("justindonato750", os.environ.get("SMTP_PASS"))
+            sg = sendgrid.SendGridClient("justindonato750", app.config["SMTP_PASS"])
             message = sendgrid.Mail()
             message.add_to(email)
             message.set_subject("Welcome to Exercredit")
