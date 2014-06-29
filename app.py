@@ -6,8 +6,10 @@ from flask import jsonify
 from flask import flash
 from flask.ext import pymongo
 from bson import json_util
+import os
 import json
 import Users
+import sendgrid
 
 app = Flask('goal')
 app.config.from_envvar('EXERCISE_APP_SETTINGS')
@@ -147,6 +149,15 @@ def index():
 
         if not user:
             user_id = Users.create(email)
+            sg = sendgrid.SendGridClient("justindonato750", os.environ.get("SMTP_PASS"))
+            message = sendgrid.Mail()
+            message.add_to(email)
+            message.set_subject("Welcome to Exercredit")
+            message.set_html(render_template('welcome-inlined.html', user_id=user_id))
+            message.set_from('welcome@exercredit.com')
+            status, msg = sg.send(message)
+            print status, msg
+
             return redirect('/user/%s/exercises?add=1' % user_id)
         else:
             print "flashing message"
@@ -162,6 +173,10 @@ def render_daily_mail(user_id):
         return redirect('/')
 
     return render_template('html_mail.html', user=user)
+
+@app.route("/welcome/<user_id>", methods=['GET'])
+def render_welcome_mail(user_id):
+    return render_template('welcome.html', user_id=user_id)
 
 if __name__ == "__main__":
     app.run()

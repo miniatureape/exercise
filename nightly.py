@@ -16,7 +16,7 @@ class MailMan(object):
     HTML_TPL_NAME  = 'html-mail-inlined.html'
 
     subject = 'Here\'s Your Daily Balance'
-    return_addr = 'info@excercredit.com'
+    return_addr = 'dailybalance@exercredit.com'
 
     def __init__(self, options):
 
